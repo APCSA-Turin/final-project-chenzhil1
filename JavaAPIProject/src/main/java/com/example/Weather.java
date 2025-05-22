@@ -9,10 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
 public class Weather {
-    private static int wCode = 0;
     private static double[] temperature = new double[24];
     private static boolean debug = true;
-    private static String weather = "";
+    private static int[] weather = new int[24];
     public static void findWeather() {
         try {
             String urlString = "https://api.open-meteo.com/v1/forecast?latitude=" + Map.getLatitude() + "&longitude=" + Map.getLongitude() + "&current_weather=true&hourly=temperature_2m,weathercode";
@@ -32,10 +31,9 @@ public class Weather {
                 if(debug) {
                     System.out.println(jsonResponse);
                 }
-                JSONObject currentWeather = jsonResponse.getJSONObject("current_weather");
-                wCode = currentWeather.getInt("weathercode");
                 for (int i = 0; i < 24; i++) {
-                    temperature[i] = currentWeather.getDouble("temperature");
+                    temperature[i] = jsonResponse.getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(i);
+                    weather[i] = jsonResponse.getJSONObject("hourly").getJSONArray("weathercode").getInt(i);
                 }
             } else {
                 System.out.println("GET request failed: " + responseCode);
@@ -43,14 +41,10 @@ public class Weather {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        defineWeather();
     }
 
-    public static int getWeather() {
-        return wCode;
-    }
-
-    public static void defineWeather() {
+    public static String defineWeather(int wCode) {
+        String weather = "";
         switch (wCode) {
             case 0:
                 weather = "Clear sky";
@@ -140,5 +134,13 @@ public class Weather {
                 weather = "Unknown weather code";
                 break; 
         }
+        return weather;
+    }
+
+    public static double getTemperature(int hour) {
+        return temperature[hour];
+    }
+    public static int getWeather(int hour) {
+        return weather[hour];
     }
 }

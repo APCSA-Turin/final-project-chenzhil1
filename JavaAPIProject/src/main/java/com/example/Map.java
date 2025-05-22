@@ -16,11 +16,15 @@ public class Map {
     private static String city = "";
     private static String state = "";
     private static boolean debug = true;
+    // Student
+    private static double schoolLatitude;
+    private static double schoolLongitude;
 
     // School
     private static String schoolName = "";
     private static String schoolAddress = "";
     private static String schoolType = ""; // Indicated by "Elementary", "Middle", "High", or "College"
+    private static int homeSchoolTransitMethod = 0;
 
     public static void getMap() {
         /*
@@ -62,9 +66,6 @@ public class Map {
                 System.out.println("Error: No response from API");
                 return "";
             }
-            if (debug) {
-                System.out.println(jsonResponse);
-            }
             country = jsonResponse.getString("countryName");
             state = jsonResponse.getString("principalSubdivision");
             city = jsonResponse.getString("locality");
@@ -105,9 +106,6 @@ public class Map {
                 System.out.println("Error: No response from API");
                 return;
             }
-            if (debug) {
-                System.out.println(jsonResponse);
-            }
 
             JSONArray features = jsonResponse.getJSONArray("features");
             schoolHelper(features);
@@ -127,15 +125,15 @@ public class Map {
                         System.out.println("Error: No response from API");
                         return;
                     }
-                    if (debug) {
-                        System.out.println(jsonResponse);
-                    }
 
                     features = jsonResponse.getJSONArray("features");
                     schoolHelper(features);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+            if(schoolName.equals("")) {
+
             }
 
         } catch (Exception e) {
@@ -157,7 +155,10 @@ public class Map {
 
     public static void schoolHelper(JSONArray features) {
         if (features.length() > 0) {
-            
+            schoolName = features.getJSONObject(0).getJSONObject("properties").getString("address_line1");
+            schoolAddress = features.getJSONObject(0).getJSONObject("properties").getString("address_line2");
+            schoolLatitude = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
+            schoolLongitude = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
             for (int i = 0; i < features.length(); i++) {
                 if(debug) {
                     System.out.println("!!!" + features.getJSONObject(i).getJSONObject("properties").getString("address_line1"));
@@ -165,6 +166,11 @@ public class Map {
                 if (features.getJSONObject(i).getJSONObject("properties").getString("address_line1").indexOf(schoolType) > 0 ) {
                     schoolName = features.getJSONObject(i).getJSONObject("properties").getString("address_line1");
                     schoolAddress = features.getJSONObject(i).getJSONObject("properties").getString("address_line2");
+                    schoolLatitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
+                                        schoolLongitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                    System.out.println("schoolLatitude: " + schoolLatitude);
+                    System.out.println("schoolLongitude: " + schoolLongitude);
+                    
                     break;
                 }
             }
@@ -176,7 +182,7 @@ public class Map {
     }
 
     public static int getTransitTime(double lat1, double long1, double lat2, double long2, String mode) {
-        if(mode.equalsIgnoreCase("transit")) {
+        if(mode.equalsIgnoreCase("transit") || mode.equalsIgnoreCase("drive") || mode.equalsIgnoreCase("walk") || mode.equalsIgnoreCase("bike")) {
                         
             try {
                 String urlString = "https://api.geoapify.com/v1/routing?waypoints=" + lat1 + "," + long1 + "|" + lat2 + "," + long2 + "&mode=" + mode + "&apiKey=4f2009d322ee4b4395e93c61180a2d0e";
@@ -185,9 +191,7 @@ public class Map {
                     System.out.println("Error: No response from API");
                     return -1;
                 }
-                if (debug) {
-                    System.out.println(jsonResponse);
-                }
+                return jsonResponse.getJSONArray("features").getJSONObject(0).getJSONObject("properties").getInt("time") / 60;
 
             }
             catch (Exception e) {
@@ -196,6 +200,14 @@ public class Map {
         }
         return 0;
     }
+    public static double getSchoolLatitude() {
+        return schoolLatitude;
+    }
+    public static double getSchoolLongitude() {
+        return schoolLongitude;
+    }
+
+    
 
     public static JSONObject getRequest(String urlString) {
         try {
@@ -206,12 +218,12 @@ public class Map {
             String inputLine;
             StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            response.append(inputLine);
             }
             in.close();
             JSONObject jsonResponse = new JSONObject(response.toString());
             if (debug) {
-                System.out.println(jsonResponse);
+            System.out.println(jsonResponse);
             }
             return jsonResponse;
         } catch (Exception e) {
@@ -219,4 +231,5 @@ public class Map {
         }
         return null;
     }
+
 }

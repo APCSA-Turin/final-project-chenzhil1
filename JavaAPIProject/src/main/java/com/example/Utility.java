@@ -1,4 +1,6 @@
 package com.example;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Utility {
     public static String[] states = {
@@ -14,7 +16,6 @@ public class Utility {
         "American Samoa", "Guam", "Northern Mariana Islands", "Puerto Rico", "U.S. Virgin Islands"
     };
 
-    public static int[] mainTransit = {};
     
     
     
