@@ -77,7 +77,7 @@ public class Main extends Application {
 
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Check Weather")) {
-                    game.getWeather();
+                    System.out.println(game.getWeather());
                     game.addTime(5);
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Check transit time")) {
@@ -151,6 +151,12 @@ public class Main extends Application {
 
     public void start(Stage primaryStage) {
         GameLogic game = new GameLogic();
+        System.out.println();
+        System.out.println("Welcome to A Day in A City!");
+        System.out.println("Game by Chen Zhi Lin");
+        System.out.println("GUI is open on the next browser tab");
+        System.out.println("If you want to play the console version with more features, please run the program with debug mode enabled");
+        System.out.println("Currently working until first selection acton, check weather, check transit time, pack bag, play with phone are not ready"); 
 
         // Ask for user's name
         TextInputDialog dialog = new TextInputDialog("");
@@ -237,7 +243,7 @@ public class Main extends Application {
         stage.setTitle("A Day in A City");
         stage.show();
 
-        int transitTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "drive");
+        int transitTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "transit");
         if(transitTime >= 60) {
             game.setSchoolHour(8, 30);
         }
@@ -307,26 +313,28 @@ public class Main extends Application {
                 showScene3c(stage, action, game, transitTime);
                 return;
             case "Check Weather":
-                game.getWeather();
                 game.addTime(5);
-                break;
+                showScene3d(stage, action, game, transitTime);
+                return;
             case "Check transit time":
                 System.out.println("The transit time to school is " + transitTime + " minutes.");
                 System.out.println("School starts at " + game.getSchoolHour() + ":" + game.getSchoolMinute());
                 game.addTime(5);
-                break;
+                showScene3e(stage, action, game, transitTime);
+                return;
             case "Pack your bag":
-                game.packBag();
-                game.addTime(10);
-                break;
+                notReady(stage, action, game, transitTime);
+                //game.addTime(10);
+                return;
             case "Play with phone":
-                int phoneTime = (int)(Math.random() * 6 + 1) * 5;
-                game.addTime(phoneTime);
-                System.out.println("You played with your phone.");
-                break;
+                // int phoneTime = (int)(Math.random() * 6 + 1) * 5;
+                // game.addTime(phoneTime);
+                // System.out.println("You played with your phone.");
+                notReady(stage, action, game, transitTime);
+                return;
             case "Exit home":
-
-            break;
+                notReady(stage, action, game, transitTime);
+            return;
         }
 
     }
@@ -348,7 +356,7 @@ public class Main extends Application {
         stage.setScene(scene1);
         stage.setTitle("A Day in A City");
         stage.show();
-        String fullText = "You brushed your teeth.";
+        String fullText = "You brushed your teeth." + "\n" + "It is now " + game.getTime() + "\n" + "Remember that you have to arrive at school by " + game.formatTime(game.getSchoolHour(), game.getSchoolMinute());
         for(int i = 0; i < game.getMorningThings().size(); i++) {
             if(game.getMorningThings().get(i).equalsIgnoreCase("Brush your teeth")) {
                 game.getMorningThings().remove(i);
@@ -383,7 +391,7 @@ public class Main extends Application {
         stage.setScene(scene1);
         stage.setTitle("A Day in A City");
         stage.show();
-        String fullText = "You ate breakfast";
+        String fullText = "You ate breakfast" + "\n" + "It is now " + game.getTime() + "\n" + "Remember that you have to arrive at school by " + game.formatTime(game.getSchoolHour(), game.getSchoolMinute());
         for(int i = 0; i < game.getMorningThings().size(); i++) {
             if(game.getMorningThings().get(i).equalsIgnoreCase("Eat Breakfast")) {
                 game.getMorningThings().remove(i);
@@ -418,7 +426,7 @@ public class Main extends Application {
         stage.setScene(scene1);
         stage.setTitle("A Day in A City");
         stage.show();
-        String fullText = "You got dressed";
+        String fullText = "You got dressed"  + "\n" + "It is now " + game.getTime() + "\n" + "Remember that you have to arrive at school by " + game.formatTime(game.getSchoolHour(), game.getSchoolMinute());
         for(int i = 0; i < game.getMorningThings().size(); i++) {
             if(game.getMorningThings().get(i).equalsIgnoreCase("Get dressed")) {
                 game.getMorningThings().remove(i);
@@ -433,9 +441,95 @@ public class Main extends Application {
                 }
             });
         });
+
+        
     }
 
+    public void showScene3d(Stage stage, String name, GameLogic game, int transitTime) {
+        Label label = new Label();
+        label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
 
+        Image image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/weather.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(600);
+        imageView.setFitHeight(400);
+        imageView.setPreserveRatio(true);
+        Label hintLabel = new Label("Press ENTER to continue...");
+        hintLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #777777;");
+
+        VBox vbox = new VBox(10, imageView, label, hintLabel);
+        vbox.setAlignment(Pos.CENTER);
+        Scene scene1 = new Scene(vbox, 1200,695);
+        stage.setScene(scene1);
+        stage.setTitle("A Day in A City");
+        stage.show();
+        String fullText = game.getWeather()  + "\n" + "It is now " + game.getTime() + "\n" + "Remember that you have to arrive at school by " + game.formatTime(game.getSchoolHour(), game.getSchoolMinute());
+        
+        typeText(label, fullText, Duration.millis(50), () -> {
+            // This code will run after the text is fully displayed
+                scene1.setOnKeyPressed(event -> {
+                if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                    showScene3(stage, fullText, game, transitTime);
+                }
+            });
+        });
+    } {
+
+    }
+
+    public void showScene3e(Stage stage, String name, GameLogic game, int transitTime) {
+        Label label = new Label();
+        label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
+
+        Image image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/transit.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(600);
+        imageView.setFitHeight(400);
+        imageView.setPreserveRatio(true);
+        Label hintLabel = new Label("Press ENTER to continue...");
+        hintLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #777777;");
+
+        VBox vbox = new VBox(10, imageView, label, hintLabel);
+        vbox.setAlignment(Pos.CENTER);
+        Scene scene1 = new Scene(vbox, 1200,695);
+        stage.setScene(scene1);
+        stage.setTitle("A Day in A City");
+        stage.show();
+        String fullText = "The transit time to school is " + transitTime + " minutes." + "\n" + "It is now " + game.getTime() + "\n" + "Remember that you have to arrive at school by " + game.formatTime(game.getSchoolHour(), game.getSchoolMinute());
+        
+        typeText(label, fullText, Duration.millis(50), () -> {
+            // This code will run after the text is fully displayed
+                scene1.setOnKeyPressed(event -> {
+                if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                    showScene3(stage, fullText, game, transitTime);
+                }
+            });
+        });
+    }
+
+    public void notReady(Stage stage, String name, GameLogic game, int transitTime) {
+        Label label = new Label();
+        label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
+        Label hintLabel = new Label("Press ENTER to continue...");
+        hintLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #777777;");
+
+        VBox vbox = new VBox(10, label, hintLabel);
+        vbox.setAlignment(Pos.CENTER);
+        Scene scene1 = new Scene(vbox, 1200,695);
+        stage.setScene(scene1);
+        stage.setTitle("A Day in A City");
+        stage.show();
+        String fullText = "This feature is not ready yet.";
+        
+        typeText(label, fullText, Duration.millis(50), () -> {
+            // This code will run after the text is fully displayed
+                scene1.setOnKeyPressed(event -> {
+                if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                    showScene3(stage, fullText, game, transitTime);
+                }
+            });
+        });
+    }
     
 
 

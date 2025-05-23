@@ -108,22 +108,22 @@ public class GameLogic {
         updateTime(0);
     }
 
-    public void getWeather() {
-        System.out.println("The weather now is " + Weather.defineWeather(Weather.getWeather(hour)));
-
+    public String getWeather() {
+        String info = "";
+        info += "The weather now is " + Weather.defineWeather(Weather.getWeather(hour)) + "\n";
         for(int i = hour; i < 24; i++) {
             if(((Weather.getWeather(i) >= 51 && Weather.getWeather(i) <= 67)) || (Weather.getWeather(i) >= 80 && Weather.getWeather(i) <= 82) || (Weather.getWeather(i) >= 95 && Weather.getWeather(i) <= 99)) {
-                System.out.println("It will rain today.");
-                break;
-            }
-        }        
-        for(int i = hour; i < 24; i++) {
-            if(((Weather.getWeather(i) >= 71 && Weather.getWeather(i) <= 77)) || (Weather.getWeather(i) >85 && Weather.getWeather(i) <= 86)) {
-                System.out.println("It will snow today.");
+                info += "It will rain today.\n";
                 break;
             }
         }
-        System.out.println("The temperature now is " + Weather.getTemperature(hour) + "°C");
+        for(int i = hour; i < 24; i++) {
+            if(((Weather.getWeather(i) >= 71 && Weather.getWeather(i) <= 77)) || (Weather.getWeather(i) >85 && Weather.getWeather(i) <= 86)) {
+                info += "It will snow today.\n";
+                break;
+            }
+        }
+        info += "The temperature now is " + Weather.getTemperature(hour) + "°C\n";
         double high = Integer.MIN_VALUE;
         double low = Integer.MAX_VALUE;
         for(int i = hour; i < 24; i++) {
@@ -134,8 +134,8 @@ public class GameLogic {
                 low = Weather.getTemperature(i);
             }
         }
-        System.out.println("The temperature today is " + low + "°C to " + high + "°C");
-
+        info += "The temperature today is " + low + "°C to " + high + "°C";
+        return info;
     }
 
     public void checkReady() {
@@ -300,5 +300,6 @@ public class GameLogic {
             System.out.println("You forgot your homework.");
         }
     }
+
 
 }
