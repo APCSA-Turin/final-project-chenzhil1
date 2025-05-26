@@ -14,14 +14,14 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \- Format the hour and minute by hour 
 
     public void addTime(int minute)
-\- Add time to the current after execute some user action \n
+\- Add time to the current after execute some user action \
 \- Format time after added
 
     public String getWeather()
-\- Get stored weather based on current hour \n
-\- Get stored temperature based on current hour \n
-\- Check if the weather and temperatue in the future 24 hours for rain and snow \n
-\- Output for the check weather action in main \n
+\- Get stored weather based on current hour \
+\- Get stored temperature based on current hour \
+\- Check if the weather and temperatue in the future 24 hours for rain and snow \
+\- Output for the check weather action in main \
 
 
     public void packBag()
