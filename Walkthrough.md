@@ -11,6 +11,12 @@ A list of codes used for starting the virtual display and remote connection to c
 Main game logic, accessible to the Main class, used to execute game related activities and store game info.
     
     public void updateTime(int type)
-\- Format the hour and minute
+\- Format the hour and minute by hour 
+
+    public void addTime(int minute)
+\- Add time to the current after execute some user action
+\- Format time after added
+
+
 
 
