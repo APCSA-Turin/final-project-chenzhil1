@@ -9,6 +9,7 @@ A list of codes used for starting the virtual display and remote connection to c
 
 ### GameLogic.java
 Main game logic, accessible to the Main class, used to execute game related activities and store game info.
+    
     public void updateTime(int type)
 - Format the hour and minute
 
