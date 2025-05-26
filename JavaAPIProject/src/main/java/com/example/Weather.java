@@ -13,6 +13,7 @@ public class Weather {
     private static boolean debug = true;
     private static int[] weather = new int[24];
     public static void findWeather() {
+        //Find weather using Open Meteo API from the latitude and longitude of the map
         try {
             String urlString = "https://api.open-meteo.com/v1/forecast?latitude=" + Map.getLatitude() + "&longitude=" + Map.getLongitude() + "&current_weather=true&hourly=temperature_2m,weathercode";
             URL url = new URL(urlString);
@@ -44,6 +45,7 @@ public class Weather {
     }
 
     public static String defineWeather(int wCode) {
+        //Define weather based on the weather code
         String weather = "";
         switch (wCode) {
             case 0:

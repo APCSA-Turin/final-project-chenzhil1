@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class MainDemo extends Application {
+public class MainDemo extends Application { //Demo class used for testing JavaFX functionality
     public static void main(String[] args) {
         launch(args);
     }

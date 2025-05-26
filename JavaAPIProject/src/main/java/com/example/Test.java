@@ -1,6 +1,6 @@
 package com.example;
 
-public class Test {
+public class Test { //Test class used for testing functionality of the game components
     public static void main(String[] args) {
         // Map.getMap();
         // System.out.println(Map.getCountry());

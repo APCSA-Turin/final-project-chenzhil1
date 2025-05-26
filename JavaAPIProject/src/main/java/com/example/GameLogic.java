@@ -3,22 +3,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class GameLogic {
-    private int age;
+public class GameLogic { //Main game logic class, accessed by the main class for both GUI and console mode
+    //Non static variables to allow restarting the game
+    private int age; //Player's age radomly generated between 10 and 18
+    //Date and time variables
+    //Date is randomly generated between 20XX-01-01 and 20XX-12-28
     private String date;
     private String time;
+    //Time is initialized to 6:00 AM, and can be updated
+    //Hour and minute are used to keep track of the time
     private int hour;
     private int minute;
+    //Role of the player, can be Student, Teacher, or Parent, but currently only Student is implemented
     private String role;
-    private boolean debug = true;
-    private int luck = (int) (Math.random() * 20 + 1);
-    private int happiness = (int) (Math.random() * 30 + 50);
-    private int schoolHour = 8;
+    private boolean debug = true; //Debug mode used to print debug information
+    private int luck = (int) (Math.random() * 20 + 1); //Random luck value between 1 and 20
+    private int happiness = (int) (Math.random() * 30 + 50); //Random happiness value between 50 and 80
+    private int schoolHour = 8; // School hour is initialized to 8 AM, can be updated
     private int schoolMinute = 0;
-    private int ready = 0;
+    private int ready = 0; //Check bag item initialized as 0, which means no item is checked
     private boolean umbrellaPack = false;
     private boolean lunch = false;
-    private ArrayList<String> morningThings = new ArrayList<String>(Arrays.asList("Brush your teeth", "Eat Breakfast", "Get dressed", "Check Weather", "Check transit time", "Pack your bag", "Play with phone", "Exit Home"));
+    //List of available morning activities, used for GUI button list
+    private ArrayList<String> morningThings = new ArrayList<String>(Arrays.asList("Brush your teeth", "Eat breakfast", "Get dressed", "Check weather", "Check transit time", "Pack your bag", "Play with phone", "Exit home"));
     private boolean textbook = false;
     private boolean homework = false;
     public GameLogic() {
@@ -34,7 +41,7 @@ public class GameLogic {
         Weather.findWeather(); // Initialize weather
         updateTime(0); // Update time to 6:30 AM for the morning
         // Initialize game state
-        if(role.equalsIgnoreCase("Student")) {
+        if(role.equalsIgnoreCase("Student")) { //Check type of school based on age
             age = (int) (Math.random() * 9 + 10); 
             if(age >= 10 && age <= 11) {
                 Map.setSchoolType("Elementary");
@@ -45,7 +52,7 @@ public class GameLogic {
             } else {
                 Map.setSchoolType("College");
             }
-            Map.findSchool();
+            Map.findSchool(); //Find school based on type
         }
     }
 
@@ -63,7 +70,7 @@ public class GameLogic {
         return time;
     }
 
-    public void updateTime(int type) {
+    public void updateTime(int type) { //Format the time correctly based on minutes and hours
         if(type == 0) {
             if(minute >= 60) {
                 hour += minute / 60;
@@ -103,12 +110,12 @@ public class GameLogic {
         return morningThings;
     }
 
-    public void addTime(int minute) {
+    public void addTime(int minute) { //Add time to the current time, used for morning activities
         this.minute += minute;
         updateTime(0);
     }
 
-    public String getWeather() {
+    public String getWeather() { //Get the current weather information based on the hour
         String info = "";
         info += "The weather now is " + Weather.defineWeather(Weather.getWeather(hour)) + "\n";
         for(int i = hour; i < 24; i++) {
@@ -146,7 +153,7 @@ public class GameLogic {
         return ready;
     }
 
-    public void packBag() {
+    public void packBag() { //Method to pack the bag, used for GUI button
         Scanner scanner = new Scanner(System.in);
         String lunch = "";
         // Only accept "yes", "y", "no", or "n"
@@ -178,7 +185,7 @@ public class GameLogic {
             }
         }
 
-        checkReady();
+        checkReady(); // Check if the player is ready for school, randomly generated between 0 and 2
 
         String check = "";
         if(ready == 0) {
@@ -225,7 +232,7 @@ public class GameLogic {
         return minute;
     }
 
-    public void checkLateSchool() {
+    public void checkLateSchool() { //Check if the player is late for school, based on the current time and the school hour
         if((hour > schoolHour) || (hour == schoolHour && minute > schoolMinute)) {
             System.out.println("You are late for school!");
             happiness -= 10;
@@ -236,7 +243,7 @@ public class GameLogic {
         }
     }
 
-    public void weatherEvent() {
+    public void weatherEvent() { //Check the weather event based on the current hour and the umbrella pack status
         if(Weather.getWeather(hour) >= 51 && Weather.getWeather(hour) <= 67) {
             if(umbrellaPack == false) {
                 System.out.println("You got wet because you did not pack your umbrella.");
@@ -292,7 +299,7 @@ public class GameLogic {
         return String.format("%02d:%02d", hour, minute);
     }
 
-    public void checkBagContents() {
+    public void checkBagContents() { //Check the bag contents
         if(textbook == false) {
             System.out.println("You forgot your textbook.");
         }

@@ -2,7 +2,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Utility {
+public class Utility { //Utility class used to store constants
     public static String[] states = {
         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
         "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",

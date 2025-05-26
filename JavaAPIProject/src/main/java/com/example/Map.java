@@ -8,25 +8,25 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Map {
+public class Map { //Used to handle any location related functionality
     // Random location
+    // Used to generate a random location in the United States
     private static double latitude;
     private static double longitude;
-    private static String country = "";
-    private static String city = "";
-    private static String state = "";
-    private static boolean debug = true;
+    private static String country = ""; // Country name
+    private static String city = ""; // City name
+    private static String state = ""; // State name
+    private static boolean debug = true; //debug mode used to print debug information
     // Student
-    private static double schoolLatitude;
-    private static double schoolLongitude;
+    private static double schoolLatitude; // Latitude of the school
+    private static double schoolLongitude;  // Longitude of the school
 
     // School
-    private static String schoolName = "";
-    private static String schoolAddress = "";
+    private static String schoolName = ""; // Name of the school
+    private static String schoolAddress = "";  // Address of the school
     private static String schoolType = ""; // Indicated by "Elementary", "Middle", "High", or "College"
-    private static int homeSchoolTransitMethod = 0;
 
-    public static void getMap() {
+    public static void getMap() { // Used to get a random location in the United States
         /*
          * temp test codes
          * country = "";
@@ -34,14 +34,15 @@ public class Map {
          * longitude = -81.13375343709545;
          * country = findPlace(latitude, longitude);
          */
-        while (country.indexOf("United States") < 0 || state.equals("")) {
+        while (country.indexOf("United States") < 0 || state.equals("")) { 
+            // Loop until a valid location in the United States is found
             latitude = Math.random() * 24.4 + 24.98;
             longitude = Math.random() * 57.92 - 124.85;
             System.out.println("latitude: " + latitude);
             System.out.println("longitude: " + longitude);
             country = findPlace(latitude, longitude);
         }
-        if (debug) {
+        if (debug) { // Print the location details if debug mode is enabled
             System.out.println("Latitude: " + latitude);
             System.out.println("Longitude: " + longitude);
             System.out.println("Country: " + country);
@@ -58,6 +59,7 @@ public class Map {
     }
 
     public static String findPlace(double latitude, double longitude) {
+        // Used to find the country, state, and city based on latitude and longitude
         String country = "";
         try {
             String urlString = "https://api.bigdatacloud.net/data/reverse-geocode?latitude=" + latitude + "&longitude=" + longitude + "&localityLanguage=en&key=bdc_f7778da2781747fa9c9f12c9ba30a84b";
@@ -88,6 +90,7 @@ public class Map {
     }
 
     public static void findSchool() {
+        // Used to find a school based on the latitude and longitude
         double area = 0.09;
         if (schoolType.equalsIgnoreCase("Elementary") || schoolType.equalsIgnoreCase("Middle") || schoolType.equalsIgnoreCase("High") || schoolType.equalsIgnoreCase("College")) {
             // Valid type\
@@ -98,7 +101,7 @@ public class Map {
             System.out.println("Invalid school type");
             return;
         }
-
+        // If the school type is valid, proceed to find the school using the Geoapify API
         try {
             String urlString = "https://api.geoapify.com/v2/places?categories=education.school&filter=rect:" + (longitude + area) + "," + (latitude + area) + "," + (longitude - area) + "," + (latitude - area) + "&limit=20&apiKey=4f2009d322ee4b4395e93c61180a2d0e";
             JSONObject jsonResponse = getRequest(urlString);
@@ -111,7 +114,7 @@ public class Map {
             schoolHelper(features);
 
             int iterations = 0;
-            while (schoolName.equals("") && iterations < 5) {
+            while (schoolName.equals("") && iterations < 5) { // Retry up to 5 times to find a school
                 iterations++;
                 if (debug) {
                     System.out.println("No " + schoolType + " found, retrying...");
@@ -127,13 +130,10 @@ public class Map {
                     }
 
                     features = jsonResponse.getJSONArray("features");
-                    schoolHelper(features);
+                    schoolHelper(features); //Set school info
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            if(schoolName.equals("")) {
-
             }
 
         } catch (Exception e) {
@@ -153,21 +153,23 @@ public class Map {
         return schoolType;
     }
 
-    public static void schoolHelper(JSONArray features) {
-        if (features.length() > 0) {
+    public static void schoolHelper(JSONArray features) { 
+        // Helper method to set the school information based on the features array
+        if (features.length() > 0) { //Set school info to fist school until a match school is found
             schoolName = features.getJSONObject(0).getJSONObject("properties").getString("address_line1");
             schoolAddress = features.getJSONObject(0).getJSONObject("properties").getString("address_line2");
             schoolLatitude = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
             schoolLongitude = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
             for (int i = 0; i < features.length(); i++) {
-                if(debug) {
+                if(debug) { //Debug mode prints the name of each school found
                     System.out.println("!!!" + features.getJSONObject(i).getJSONObject("properties").getString("address_line1"));
                 }
                 if (features.getJSONObject(i).getJSONObject("properties").getString("address_line1").indexOf(schoolType) > 0 ) {
+                    //Set school info if the school type matches
                     schoolName = features.getJSONObject(i).getJSONObject("properties").getString("address_line1");
                     schoolAddress = features.getJSONObject(i).getJSONObject("properties").getString("address_line2");
                     schoolLatitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
-                                        schoolLongitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                    schoolLongitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
                     System.out.println("schoolLatitude: " + schoolLatitude);
                     System.out.println("schoolLongitude: " + schoolLongitude);
                     
@@ -182,6 +184,7 @@ public class Map {
     }
 
     public static int getTransitTime(double lat1, double long1, double lat2, double long2, String mode) {
+        //Find transit time between two locations using the Geoapify API
         if(mode.equalsIgnoreCase("transit") || mode.equalsIgnoreCase("drive") || mode.equalsIgnoreCase("walk") || mode.equalsIgnoreCase("bike")) {
                         
             try {
@@ -210,6 +213,7 @@ public class Map {
     
 
     public static JSONObject getRequest(String urlString) {
+        // Used to make a GET request to the specified URL and return the JSON response
         try {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
