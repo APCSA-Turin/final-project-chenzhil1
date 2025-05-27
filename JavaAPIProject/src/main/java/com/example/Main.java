@@ -213,47 +213,51 @@ public class Main extends Application { // Main class for the JavaFX application
 
     public void handleMorningChoice(String action, String name, GameLogic game, int transitTime, Stage stage) {
         //This method handles the user's choice in the morning scene
-        switch(action) {
-            case "Brush your teeth":
-                System.out.println("You brush your teeth.");
-                game.addTime(5);
-                showScene(stage, action, game, transitTime, "scene3a");
-                return; 
-            case "Eat breakfast":
-                System.out.println("You cooked and ate breakfast.");
-                game.addTime(30);
-                showScene(stage, action, game, transitTime, "scene3b");
+        if(game.getSchoolMinute() >= 30) {
+            showScene(stage, name, game, transitTime, "sceneForce");
+        }
+        else {
+            switch(action) {
+                case "Brush your teeth":
+                    System.out.println("You brush your teeth.");
+                    game.addTime(5);
+                    showScene(stage, action, game, transitTime, "scene3a");
+                    return; 
+                case "Eat breakfast":
+                    System.out.println("You cooked and ate breakfast.");
+                    game.addTime(30);
+                    showScene(stage, action, game, transitTime, "scene3b");
+                    return;
+                case "Get dressed":
+                    System.out.println("You got dressed.");
+                    game.addTime(10);
+                    showScene(stage, action, game, transitTime, "scene3c"); 
+                    return;
+                case "Check weather":
+                    game.addTime(5);
+                    showScene(stage, action, game, transitTime, "scene3d");
+                    return;
+                case "Check transit time":
+                    System.out.println("The transit time to school is " + transitTime + " minutes.");
+                    System.out.println("School starts at " + game.getSchoolHour() + ":" + game.getSchoolMinute());
+                    game.addTime(5);
+                    showScene(stage, action, game, transitTime, "scene3e");
+                    return;
+                case "Pack your bag":
+                    game.checkReady();
+                    game.addTime(10);
+                    showScene(stage, name, game, transitTime, "scene3f", yesNoOption);
+                    return;
+                case "Play with phone":
+                    int phoneTime = (int)(Math.random() * 6 + 1) * 5;
+                    game.addTime(phoneTime);
+                    System.out.println("You played with your phone.");
+                    showScene(stage, name, game, transitTime, "scene3g");
+                    return;
+                case "Exit home":
+                    showScene(stage, name, game, transitTime, "scene4");
                 return;
-            case "Get dressed":
-                System.out.println("You got dressed.");
-                game.addTime(10);
-                showScene(stage, action, game, transitTime, "scene3c"); 
-                return;
-            case "Check weather":
-                game.addTime(5);
-                showScene(stage, action, game, transitTime, "scene3d");
-                return;
-            case "Check transit time":
-                System.out.println("The transit time to school is " + transitTime + " minutes.");
-                System.out.println("School starts at " + game.getSchoolHour() + ":" + game.getSchoolMinute());
-                game.addTime(5);
-                showScene(stage, action, game, transitTime, "scene3e");
-                return;
-            case "Pack your bag":
-                game.checkReady();
-                game.addTime(10);
-                showScene(stage, name, game, transitTime, "scene3f", yesNoOption);
-                return;
-            case "Play with phone":
-                int phoneTime = (int)(Math.random() * 6 + 1) * 5;
-                game.addTime(phoneTime);
-                System.out.println("You played with your phone.");
-                showScene(stage, name, game, transitTime, "scene3g");
-                return;
-            case "Exit home":
-                notReady(stage, name, game, transitTime);
-                showScene(stage, name, game, transitTime, "scene4");
-            return;
+            }
         }
 
     }
@@ -365,7 +369,14 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "You played with your phone." + "\n" + "It is now " + game.getTime();
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/phone.png");
                 break;
+            case "sceneForce":
+                fullText = "Your mom is calling you to leave home.\n" + "You are late for school!\n" + "You have to leave home now!";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/mom.png");
+                break;
             case "scene4":
+                fullText = "You left home." + "\n" + "It is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leavehome.png");
+                break;
                 
 
             default:
@@ -439,6 +450,14 @@ public class Main extends Application { // Main class for the JavaFX application
                         case "scene3f3b":
                             showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
                             break;
+                        case "sceneForce":
+                            showScene(stage, name, game, transitTime, "scene4");
+                            break;
+                        case "scene4":
+                            
+                        
+                        
+
                         default:
                         
                             break;
@@ -544,3 +563,4 @@ public class Main extends Application { // Main class for the JavaFX application
 
 
 }
+
