@@ -23,7 +23,7 @@ import javafx.util.Duration;
 import javafx.scene.control.TextInputDialog;
 
 public class Main extends Application { // Main class for the JavaFX application, game starts here
-    private static boolean debug = false;
+    private static boolean debug = true;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         if(debug) { //Concole version, now stopped development
@@ -88,7 +88,7 @@ public class Main extends Application { // Main class for the JavaFX application
                     game.addTime(5);
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Pack your bag")) {
-                    game.packBag();
+                    game.packBag(true);
                     game.addTime(10);
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Play with phone")) {

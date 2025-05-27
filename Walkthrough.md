@@ -23,7 +23,38 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \- Check if the weather and temperatue in the future 24 hours for rain and snow \
 \- Output for the check weather action in main \
 
-
     public void packBag()
+\-This method is used to 
+
+    public void checkLateSchool()
 \-
+
+    public void WeatherEvent()
+\-
+
+    public void checkBagContents()
+\-
+
+    public int getAge()
+    public String getDate()
+    public String getTime()
+    public int getSchoolHour()
+    public int getSchoolMinute()
+    public ArrayList<String> getMorningThings()
+    public String getWeather()
+    public int getReady()
+    public int getHour()
+    public int getMinute()
+    public int getLuck()
+    public int getHappiness()
+
+\-List of getter methods
+\-Return needed information for main
+
+    void setTime(int hour, int minute)
+    void setSchoolHour(int hour, int minute)
+    void setLuck(int luck)
+    void setHappiness(int happiness)
+\-List of setter methods
+\-Used to set specific data
 

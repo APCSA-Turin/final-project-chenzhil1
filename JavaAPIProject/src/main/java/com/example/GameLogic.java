@@ -153,37 +153,8 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         return ready;
     }
 
-    public void packBag() { //Method to pack the bag, used for GUI button
+    public void packBag(boolean debugOut) { //Method to pack the bag, used for GUI button
         Scanner scanner = new Scanner(System.in);
-        String lunch = "";
-        // Only accept "yes", "y", "no", or "n"
-        while (!(lunch.equalsIgnoreCase("yes") || lunch.equalsIgnoreCase("y") ||
-                 lunch.equalsIgnoreCase("no")  || lunch.equalsIgnoreCase("n"))) {
-            System.out.print("Do you want to bring your lunch? (yes/no): ");
-            lunch = scanner.next();
-            if (lunch.equalsIgnoreCase("yes") || lunch.equalsIgnoreCase("y")) {
-                System.out.println("You packed your lunch.");
-            } else if (lunch.equalsIgnoreCase("no") || lunch.equalsIgnoreCase("n")) {
-                System.out.println("You did not pack your lunch.");
-            } else {
-                System.out.println("Please enter yes, y, no, or n.");
-            }
-        }
-
-        String umbrella = "";
-        while (!(umbrella.equalsIgnoreCase("yes") || umbrella.equalsIgnoreCase("y") ||
-                 umbrella.equalsIgnoreCase("no")  || umbrella.equalsIgnoreCase("n"))) {
-            System.out.print("Do you want to bring an umbrella? (yes/no): ");
-            umbrella = scanner.next();
-            if (umbrella.equalsIgnoreCase("yes") || umbrella.equalsIgnoreCase("y")) {
-                umbrellaPack = true;
-                System.out.println("You packed your umbrella.");
-            } else if (umbrella.equalsIgnoreCase("no") || umbrella.equalsIgnoreCase("n")) {
-                System.out.println("You did not pack your umbrella.");
-            } else {
-                System.out.println("Please enter yes, y, no, or n.");
-            }
-        }
 
         checkReady(); // Check if the player is ready for school, randomly generated between 0 and 2
 
@@ -198,31 +169,65 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             homework = true;
             textbook = true;
         }
-        while (!(check.equalsIgnoreCase("yes") || check.equalsIgnoreCase("y") ||
-                 check.equalsIgnoreCase("no")  || check.equalsIgnoreCase("n"))) {
-            System.out.print("Do you want to check over your bag? (yes/no): ");
-            check = scanner.next();
-            if (check.equalsIgnoreCase("yes") || check.equalsIgnoreCase("y")) {
-                System.out.println("You checked your bag.");
-                if (ready == 0) {
-                    System.out.println("You forgot your homework! Phew, good that you checked your bag.");
-                    homework = true;
-                    happiness += 5;
-                } else if (ready == 1) {
-                    System.out.println("You forgot your textbook! Phew, good that you checked your bag.");
-                    textbook = true;
-                    happiness += 5;
+        if(debugOut) {
+            String lunch = "";
+            // Only accept "yes", "y", "no", or "n"
+            while (!(lunch.equalsIgnoreCase("yes") || lunch.equalsIgnoreCase("y") ||
+                    lunch.equalsIgnoreCase("no")  || lunch.equalsIgnoreCase("n"))) {
+                System.out.print("Do you want to bring your lunch? (yes/no): ");
+                lunch = scanner.next();
+                if (lunch.equalsIgnoreCase("yes") || lunch.equalsIgnoreCase("y")) {
+                    System.out.println("You packed your lunch.");
+                } else if (lunch.equalsIgnoreCase("no") || lunch.equalsIgnoreCase("n")) {
+                    System.out.println("You did not pack your lunch.");
                 } else {
-                    System.out.println("You have everything you need.");
-                    happiness += 10;
+                    System.out.println("Please enter yes, y, no, or n.");
+
                 }
-            } else if (check.equalsIgnoreCase("no") || check.equalsIgnoreCase("n")) {
-                System.out.println("You feel confident about yourself.");
-            } else {
-                System.out.println("Please enter yes, y, no, or n.");
+            }
+            String umbrella = "";
+            while (!(umbrella.equalsIgnoreCase("yes") || umbrella.equalsIgnoreCase("y") ||
+                    umbrella.equalsIgnoreCase("no")  || umbrella.equalsIgnoreCase("n"))) {
+                System.out.print("Do you want to bring an umbrella? (yes/no): ");
+                umbrella = scanner.next();
+                if (umbrella.equalsIgnoreCase("yes") || umbrella.equalsIgnoreCase("y")) {
+                    umbrellaPack = true;
+                    System.out.println("You packed your umbrella.");
+                } else if (umbrella.equalsIgnoreCase("no") || umbrella.equalsIgnoreCase("n")) {
+                    System.out.println("You did not pack your umbrella.");
+                } else {
+                    System.out.println("Please enter yes, y, no, or n.");
+                }
+            }
+            while (!(check.equalsIgnoreCase("yes") || check.equalsIgnoreCase("y") ||
+                    check.equalsIgnoreCase("no")  || check.equalsIgnoreCase("n"))) {
+                System.out.print("Do you want to check over your bag? (yes/no): ");
+                check = scanner.next();
+                if (check.equalsIgnoreCase("yes") || check.equalsIgnoreCase("y")) {
+                    System.out.println("You checked your bag.");
+                    if (ready == 0) {
+                        System.out.println("You forgot your homework! Phew, good that you checked your bag.");
+                        homework = true;
+                        happiness += 5;
+                    } else if (ready == 1) {
+                        System.out.println("You forgot your textbook! Phew, good that you checked your bag.");
+                        textbook = true;
+                        happiness += 5;
+                    } else {
+                        System.out.println("You have everything you need.");
+                        happiness += 10;
+                    }
+                } else if (check.equalsIgnoreCase("no") || check.equalsIgnoreCase("n")) {
+                    System.out.println("You feel confident about yourself.");
+                } else {
+                    System.out.println("Please enter yes, y, no, or n.");
+                }
             }
         }
+
+
         System.out.println("You packed your bag.");
+
     }
 
     public int getHour() {
