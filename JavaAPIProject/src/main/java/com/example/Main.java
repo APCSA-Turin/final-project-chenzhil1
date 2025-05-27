@@ -240,18 +240,19 @@ public class Main extends Application { // Main class for the JavaFX application
                 showScene(stage, action, game, transitTime, "scene3e");
                 return;
             case "Pack your bag":
-                notReady(stage, action, game, transitTime);
                 game.checkReady();
+                game.addTime(10);
                 showScene(stage, name, game, transitTime, "scene3f", yesNoOption);
                 return;
             case "Play with phone":
-                // int phoneTime = (int)(Math.random() * 6 + 1) * 5;
-                // game.addTime(phoneTime);
-                // System.out.println("You played with your phone.");
-                notReady(stage, name, game, transitTime);
+                int phoneTime = (int)(Math.random() * 6 + 1) * 5;
+                game.addTime(phoneTime);
+                System.out.println("You played with your phone.");
+                showScene(stage, name, game, transitTime, "scene3g");
                 return;
             case "Exit home":
                 notReady(stage, name, game, transitTime);
+                showScene(stage, name, game, transitTime, "scene4");
             return;
         }
 
@@ -326,7 +327,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
             case "scene3f1a":
                 fullText = "You did not bring your lunch.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/no_lunch.png");
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/table.png");
                 break;
             case "scene3f2":
                 fullText = "You brought an umbrella.";
@@ -334,7 +335,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
             case "scene3f2a":
                 fullText = "You did not bring an umbrella.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/no_umbrella.png");
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/table.png");
                 break;
             case "scene3f3":
                 if(game.getReady() == 0) {
@@ -350,12 +351,22 @@ public class Main extends Application { // Main class for the JavaFX application
                     fullText = "You checked your bag and everything is ready to go!";
                     image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
                 }
+                System.out.println(game.getReady());
                 break;
             case "scene3f3a":
                 fullText = "You feel confident about yourself.";
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
                 break;
-
+            case "scene3f3b":
+                fullText = "You checked your bag" + "\n" + "It is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
+                break;
+            case "scene3g":
+                fullText = "You played with your phone." + "\n" + "It is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/phone.png");
+                break;
+            case "scene4":
+                
 
             default:
                 break;
@@ -410,6 +421,7 @@ public class Main extends Application { // Main class for the JavaFX application
                             break;
                         case "scene3d":
                         case "scene3e":
+                        case "scene3g":
                             showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
                             break;
                         case "scene3f1":
@@ -422,7 +434,10 @@ public class Main extends Application { // Main class for the JavaFX application
                             break;
                         case "scene3f3":
                         case "scene3f3a":
-                            showScene(stage, name, game, transitTime, "scene3", yesNoOption);
+                            showScene(stage, name, game, transitTime, "scene3f3b");
+                            break;
+                        case "scene3f3b":
+                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
                             break;
                         default:
                         
