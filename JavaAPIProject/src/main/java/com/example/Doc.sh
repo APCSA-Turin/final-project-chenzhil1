@@ -1,7 +1,8 @@
 #Copy and paste this script into the terminal to start virtual display and VNC server for remote codespace GUI
 #If does not work copy and paste the commands after cd again
 
-
+sudo apt update
+sudo apt install -y xvfb fluxbox x11vnc websockify novnc
 # 1. Start headless X server on display :99
 Xvfb :99 -screen 0 1665x915x24 -nolisten tcp -nolisten unix &
 
