@@ -48,13 +48,67 @@ Main game logic, accessible to the Main class, used to execute game related acti
     public int getLuck()
     public int getHappiness()
 
-\-List of getter methods
+\-List of getter methods \
 \-Return needed information for main
 
-    void setTime(int hour, int minute)
-    void setSchoolHour(int hour, int minute)
-    void setLuck(int luck)
-    void setHappiness(int happiness)
-\-List of setter methods
+    public void setTime(int hour, int minute)
+    public void setSchoolHour(int hour, int minute)
+    public void setLuck(int luck)
+    public void setHappiness(int happiness)
+\-List of setter methods \
 \-Used to set specific data
+
+### Main.java
+This class initializes the JavaFX application, sets up the intro and game scenes, and starts the game when the user enters their name.
+
+    public static void main(String[] args)
+\-Main method \
+\-Allow user to use debug to choose between console mode and GUI mode \
+\-initialize the game components through API calls \
+\-Runs the game
+
+    public void start(Stage primaryStage)
+\-Initialize the GUI stage \
+\-Textbox that ask for user's name
+\-Get transit time between home and school
+
+    public void typeText(Label label, String fullText, Duration delay, Runnable onFinished)
+\-Display text in typewriter form \
+\-Used for visual appealing
+
+    public void handleMorningChoice(String action, String name, GameLogic game, int transitTime, Stage stage)
+\-Used to direct scene for morning actions \
+\-Used switch to differetiate between choices
+
+    public void notReady(Stage stage, String name, GameLogic game, int transitTime)
+\-Display message for not-ready features
+
+    public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID)
+\-Display scene based on sceneID \
+\-Gather information from gameLogic object \
+\-Used images pregenerated that are stored in images folder \
+\-Display text in typewriter format
+
+    public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID, ArrayList<String> buttonsList)
+\-Display choices \
+\-Display buttons \
+\-Show buttons with delay after one another
+
+### Map.java
+This class deals with any location related API calls and storing data used for GameLogic class
+
+    public static void getMap()
+\-Generate a random longtitude and latitude \
+\-Check and restrict the location to United States \
+\-Store country info
+
+    public static String findPlace(double latitude, double longitude)
+\-Get country name by using Geoapify API call
+
+    public static void findSchool()
+\-Check school type
+\-Find matching school in near location
+
+
+
 
