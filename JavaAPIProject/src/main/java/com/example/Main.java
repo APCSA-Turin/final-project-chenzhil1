@@ -23,7 +23,8 @@ import javafx.util.Duration;
 import javafx.scene.control.TextInputDialog;
 
 public class Main extends Application { // Main class for the JavaFX application, game starts here
-    private static boolean debug = true;
+    private static boolean debug = false;
+    private static final ArrayList<String> yesNoOption = new ArrayList<>(Arrays.asList("Yes", "No"));
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         if(debug) { //Concole version, now stopped development
@@ -88,7 +89,7 @@ public class Main extends Application { // Main class for the JavaFX application
                     game.addTime(5);
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Pack your bag")) {
-                    game.packBag(true);
+                    game.packBag();
                     game.addTime(10);
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Play with phone")) {
@@ -240,7 +241,8 @@ public class Main extends Application { // Main class for the JavaFX application
                 return;
             case "Pack your bag":
                 notReady(stage, action, game, transitTime);
-                //game.addTime(10);
+                game.checkReady();
+                showScene(stage, name, game, transitTime, "scene3f", yesNoOption);
                 return;
             case "Play with phone":
                 // int phoneTime = (int)(Math.random() * 6 + 1) * 5;
@@ -318,6 +320,43 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "The transit time to school is " + transitTime + " minutes." + "\n" + "It is now " + game.getTime();
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/transit.png");
                 break;
+            case "scene3f1":
+                fullText = "You brought your lunch.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/lunch.png");
+                break;
+            case "scene3f1a":
+                fullText = "You did not bring your lunch.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/no_lunch.png");
+                break;
+            case "scene3f2":
+                fullText = "You brought an umbrella.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/umbrella.png");
+                break;
+            case "scene3f2a":
+                fullText = "You did not bring an umbrella.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/no_umbrella.png");
+                break;
+            case "scene3f3":
+                if(game.getReady() == 0) {
+                    fullText = "You forgot your homework! Phew, good that you checked your bag.";
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/homework.png");
+                    
+                }
+                else if(game.getReady() == 1) {
+                    fullText = "You forgot your textbook! Phew, good that you checked your bag.";
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/textbook.png");
+                }
+                else {
+                    fullText = "You checked your bag and everything is ready to go!";
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
+                }
+                break;
+            case "scene3f3a":
+                fullText = "You feel confident about yourself.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
+                break;
+
+
             default:
                 break;
         }
@@ -373,6 +412,18 @@ public class Main extends Application { // Main class for the JavaFX application
                         case "scene3e":
                             showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
                             break;
+                        case "scene3f1":
+                        case "scene3f1a":
+                            showScene(stage, name, game, transitTime, "scene3f2", yesNoOption);
+                            break;
+                        case "scene3f2":
+                        case "scene3f2a":
+                            showScene(stage, name, game, transitTime, "scene3f3", yesNoOption);
+                            break;
+                        case "scene3f3":
+                        case "scene3f3a":
+                            showScene(stage, name, game, transitTime, "scene3", yesNoOption);
+                            break;
                         default:
                         
                             break;
@@ -385,17 +436,45 @@ public class Main extends Application { // Main class for the JavaFX application
 
     public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID, ArrayList<String> buttonsList) {
         //This method is used when a scene allows user dicision.
-        Label label = new Label("What do you want to do now?");
+        Label label = new Label();
         label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
         VBox buttonBox = new VBox(10);
         buttonBox.setAlignment(Pos.CENTER); // <-- Add this line
         ArrayList<Button> buttons = new ArrayList<Button>();
+        if(sceneID.equals("scene3")) {
+            label.setText("What do you want to do now?");
+        }
+        else if(sceneID.equals("scene3f")) {
+            label.setText("Do you want to bring your lunch?");
+        }
+        else if (sceneID.equals("scene3f2")) {
+            label.setText("Do you want to bring an umbrella?");
+        }
+        else if(sceneID.equals("scene3f3")) {
+            label.setText("Do you want to check over your bag?");
+        }
+            
+
+
         for(String action : buttonsList) {
             Button button = new Button(action);
             button.setStyle("-fx-font-size: 18px; -fx-padding: 10px 20px;");
             if(sceneID.equals("scene3")) {
                 button.setOnAction(e -> handleMorningChoice(action, name, game, transitTime, stage));
-            } 
+            }
+            else if(sceneID.equals("scene3f")) {
+                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+            }
+            else if(sceneID.equals("scene3f2")) {
+                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+            }
+            else if(sceneID.equals("scene3f3")) {
+                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+            }
+            else {
+                button.setOnAction(e -> showScene(stage, name, game, transitTime, action));
+            }
+
             buttons.add(button);
         Timeline timeline = new Timeline();
         for(int i = 0; i < buttons.size(); i++) {
@@ -415,6 +494,35 @@ public class Main extends Application { // Main class for the JavaFX application
         stage.setTitle("A Day in A City");
         stage.show();
 
+        }
+    }
+
+    public void yesNoOptions(Stage stage, String name, GameLogic game, int transitTime, String sceneID, String action) {
+        //This method is used to display the yes/no options
+        if(sceneID.equals("scene3f")) {
+            if(action.equals("Yes")) {
+                showScene(stage, name, game, transitTime, "scene3f1");
+            }
+            else if(action.equals("No")) {
+                showScene(stage, name, game, transitTime, "scene3f1a");
+            }
+
+        }
+        else if(sceneID.equals("scene3f2")) {
+            if(action.equals("Yes")) {
+                showScene(stage, name, game, transitTime, "scene3f2");
+            }
+            else if(action.equals("No")) {
+                showScene(stage, name, game, transitTime, "scene3f2a");
+            }
+        }
+        else if(sceneID.equals("scene3f3")) {
+            if(action.equals("Yes")) {
+                showScene(stage, name, game, transitTime, "scene3f3");
+            }
+            else if(action.equals("No")) {
+                showScene(stage, name, game, transitTime, "scene3f3a");
+            }
         }
     }
     
