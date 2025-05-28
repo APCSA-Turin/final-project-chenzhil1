@@ -445,9 +445,6 @@ public class Main extends Application { // Main class for the JavaFX application
                 }
                 break;
             case "scene8":
-                if(!game.isBrushTeeth() || !game.isBreakfast() || !game.isGetDressed()) {
-                    showScene(stage, name, game, transitTime, "scene8a");
-                }
                 fullText = "Class begins, you are ready to learn!";
                 int timePassed = 12 * 60 - (game.getHour() * 60 + game.getMinute());
                 game.addTime(timePassed);
@@ -496,6 +493,8 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
             case "scene10": 
                 fullText = "it's afternoon class time, you are ready to learn!";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/class.png");
+            break;
 
             case "scene11":
                 int sleepy = (int)(Math.random() * 3);
@@ -605,6 +604,14 @@ public class Main extends Application { // Main class for the JavaFX application
                             }
                             break;
                         case "scene7":
+                            if(!game.isBreakfast() || !game.isBrushTeeth() || !game.isGetDressed()) {
+                                showScene(stage, name, game, transitTime, "scene8a");
+                            }
+                            else {
+                                showScene(stage, name, game, transitTime, "scene8");
+                            }
+                            break;
+                        case "scene8a":
                             showScene(stage, name, game, transitTime, "scene8");
                             break;
                         case "scene8" :
