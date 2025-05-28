@@ -28,6 +28,9 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     private ArrayList<String> morningThings = new ArrayList<String>(Arrays.asList("Brush your teeth", "Eat breakfast", "Get dressed", "Check weather", "Check transit time", "Pack your bag", "Play with phone", "Exit home"));
     private boolean textbook = false;
     private boolean homework = false;
+    private boolean breakfast = false;
+    private boolean brushTeeth = false;
+    private boolean getDressed = false;
     public GameLogic() {
         this.age = 0;
         this.date = "20XX-" + (int) (Math.random() * 12 + 1) + "-" + (int) (Math.random() * 28 + 1); // Random date;
@@ -147,6 +150,16 @@ public class GameLogic { //Main game logic class, accessed by the main class for
 
     public void checkReady() {
         ready = (int) (Math.random() * 3);
+        if(ready == 0) {
+            homework = true;
+        }
+        else if(ready == 1) {
+            textbook = true;
+        }
+        else {
+            homework = true;
+            textbook = true;
+        }
     }
 
     public int getReady() {
@@ -159,16 +172,6 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         checkReady(); // Check if the player is ready for school, randomly generated between 0 and 2
 
         String check = "";
-        if(ready == 0) {
-            homework = true;
-        }
-        else if(ready == 1) {
-            textbook = true;
-        }
-        else {
-            homework = true;
-            textbook = true;
-        }
         String lunch = "";
         // Only accept "yes", "y", "no", or "n"
         while (!(lunch.equalsIgnoreCase("yes") || lunch.equalsIgnoreCase("y") ||
@@ -233,54 +236,69 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         return minute;
     }
 
-    public void checkLateSchool() { //Check if the player is late for school, based on the current time and the school hour
+    public String checkLateSchool() { //Check if the player is late for school, based on the current time and the school hour
+        String result = "";
         if((hour > schoolHour) || (hour == schoolHour && minute > schoolMinute)) {
             System.out.println("You are late for school!");
+            result = "You are late for school!";
             happiness -= 10;
 
         }
         else {
             System.out.println("You are on time for school.");
+            result = "You are on time for school.";
         }
+        return result;
     }
 
-    public void weatherEvent() { //Check the weather event based on the current hour and the umbrella pack status
+    public String weatherEvent() { //Check the weather event based on the current hour and the umbrella pack status
+        String weatherNow = "";
         if(Weather.getWeather(hour) >= 51 && Weather.getWeather(hour) <= 67) {
+
             if(umbrellaPack == false) {
                 System.out.println("You got wet because you did not pack your umbrella.");
+                weatherNow = "You got wet because you did not pack your umbrella.";
                 happiness -= 10;
             }
             else {
                 System.out.println("You are safe from the rain.");
+                weatherNow = "You are safe from the rain.";
             }
         }
         else if(Weather.getWeather(hour) >= 71 && Weather.getWeather(hour) <= 77) {
             if(umbrellaPack == false) {
                 System.out.println("You got wet because you did not pack your umbrella.");
+                weatherNow = "You got wet because you did not pack your umbrella.";
                 happiness -= 5;
             }
             else {
                 System.out.println("You are safe from the snow.");
+                weatherNow = "You are safe from the snow.";
             }
         }
         else if(Weather.getWeather(hour) >= 80 && Weather.getWeather(hour) <= 82) {
             if(umbrellaPack == false) {
                 System.out.println("You got exctremely wet because you did not pack your umbrella.");
+                weatherNow = "You got extremely wet because you did not pack your umbrella.";
                 happiness -= 15;
             }
             else {
                 System.out.println("You are safe from the rain.");
+                weatherNow = "You are safe from the rain.";
             }
         }
         else if(Weather.getWeather(hour) >= 95 && Weather.getWeather(hour) <= 99) {
             if(umbrellaPack == false) {
                 System.out.println("You got extremely wet because you did not pack your umbrella.");
+                weatherNow = "You got extremely wet because you did not pack your umbrella.";
                 happiness -= 15;
             }
             else {
                 System.out.println("You are safe from the rain.");
+                weatherNow = "You are safe from the rain.";
             }
         }
+        return weatherNow;
     }
 
     public void setLuck(int luck) {
@@ -308,6 +326,50 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             System.out.println("You forgot your homework.");
         }
     }
+
+    public boolean isUmbrellaPack() {
+        return umbrellaPack;
+    }
+    public boolean isLunch() {
+        return lunch;
+    }
+    public boolean isTextbook() {
+        return textbook;
+    }
+    public boolean isHomework() {
+        return homework;
+    }
+    public void setUmbrellaPack(boolean umbrellaPack) {
+        this.umbrellaPack = umbrellaPack;
+    }
+    public void setLunch(boolean lunch) {
+        this.lunch = lunch;
+    }
+    public void setTextbook(boolean textbook) {
+        this.textbook = textbook;
+    }
+    public void setHomework(boolean homework) {
+        this.homework = homework;
+    }
+    public boolean isBreakfast() {
+        return breakfast;
+    }
+    public void setBreakfast(boolean breakfast) {
+        this.breakfast = breakfast;
+    }
+    public boolean isBrushTeeth() {
+        return brushTeeth;
+    }
+    public void setBrushTeeth(boolean brushTeeth) {
+        this.brushTeeth = brushTeeth;
+    }
+    public boolean isGetDressed() {
+        return getDressed;
+    }
+    public void setGetDressed(boolean getDressed) {
+        this.getDressed = getDressed;
+    }
+
 
 
 }
