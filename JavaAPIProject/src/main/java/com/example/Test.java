@@ -2,19 +2,14 @@ package com.example;
 
 public class Test { //Test class used for testing functionality of the game components
     public static void main(String[] args) {
-        // Map.getMap();
-        // System.out.println(Map.getCountry());
+        // Set a known location (e.g., Central Park, New York)
+        // Example: latitude = 40.785091, longitude = -73.968285
+        // You may need to make Map's latitude/longitude setters public or set them via getMap()
+        Map.getMap(); // Or set manually if you want a specific location
 
-        // Map.getMap();
-        // Weather.findWeather();
-        // System.out.println("Current temperature: " + Weather.getTemperature(0) + "°C");
+        Map.findPark();
 
-        // String time = String.format("%02d:%02d", 17, 30);
-        // System.out.println("Formatted time: " + time);
-
-        // System.out.println(Map.getTransitTime(40.6340657971, -74.006416641, 40.6891, -73.9767, "transit"));
-        // System.out.println(Map.getTransitTime(40.6850, -73.9776, 40.6891, -73.9767, "transit"));
-        System.out.println(Map.getTransitTime(40.6340657971, -74.006416641, 40.646593,  -73.997726, "transit"));
-
+        System.out.println("Park Latitude: " + Map.getParkLatitude());
+        System.out.println("Park Longitude: " + Map.getParkLongitude());
     }
 }

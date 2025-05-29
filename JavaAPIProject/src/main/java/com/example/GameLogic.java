@@ -26,6 +26,8 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     private boolean lunch = false;
     //List of available morning activities, used for GUI button list
     private ArrayList<String> morningThings = new ArrayList<String>(Arrays.asList("Brush your teeth", "Eat breakfast", "Get dressed", "Check weather", "Check transit time", "Pack your bag", "Play with phone", "Exit home"));
+    private ArrayList<String> afternoonThings = new ArrayList<String>(Arrays.asList("Go to park", "Go home"));
+    private ArrayList<String> parkThings = new ArrayList<String>(Arrays.asList("Play with friends", "Play basketball", "Run track", "Play volleyball", "Play soccer", "Play badminton", "Go home"));
     private boolean textbook = false;
     private boolean homework = false;
     private boolean breakfast = false;
@@ -210,14 +212,14 @@ public class GameLogic { //Main game logic class, accessed by the main class for
                 if (ready == 0) {
                     System.out.println("You forgot your homework! Phew, good that you checked your bag.");
                     homework = true;
-                    happiness += 5;
+                    setHappiness(getHappiness() + 5);
                 } else if (ready == 1) {
                     System.out.println("You forgot your textbook! Phew, good that you checked your bag.");
                     textbook = true;
-                    happiness += 5;
+                    setHappiness(getHappiness() + 5);
                 } else {
                     System.out.println("You have everything you need.");
-                    happiness += 10;
+                    setHappiness(getHappiness() + 10);
                 }
             } else if (check.equalsIgnoreCase("no") || check.equalsIgnoreCase("n")) {
                 System.out.println("You feel confident about yourself.");
@@ -241,7 +243,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         if((hour > schoolHour) || (hour == schoolHour && minute > schoolMinute)) {
             System.out.println("You are late for school!");
             result = "You are late for school!";
-            happiness -= 10;
+            setHappiness(getHappiness() - 10);
 
         }
         else {
@@ -258,7 +260,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             if(umbrellaPack == false) {
                 System.out.println("You got wet because you did not pack your umbrella.");
                 weatherNow = "You got wet because you did not pack your umbrella.";
-                happiness -= 10;
+                setHappiness(getHappiness() - 10);
             }
             else {
                 System.out.println("You are safe from the rain.");
@@ -269,7 +271,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             if(umbrellaPack == false) {
                 System.out.println("You got wet because you did not pack your umbrella.");
                 weatherNow = "You got wet because you did not pack your umbrella.";
-                happiness -= 5;
+                setHappiness(getHappiness() - 5);
             }
             else {
                 System.out.println("You are safe from the snow.");
@@ -280,7 +282,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             if(umbrellaPack == false) {
                 System.out.println("You got exctremely wet because you did not pack your umbrella.");
                 weatherNow = "You got extremely wet because you did not pack your umbrella.";
-                happiness -= 15;
+                setHappiness(getHappiness() - 15);
             }
             else {
                 System.out.println("You are safe from the rain.");
@@ -291,7 +293,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             if(umbrellaPack == false) {
                 System.out.println("You got extremely wet because you did not pack your umbrella.");
                 weatherNow = "You got extremely wet because you did not pack your umbrella.";
-                happiness -= 15;
+                setHappiness(getHappiness() - 15);
             }
             else {
                 System.out.println("You are safe from the rain.");
@@ -308,7 +310,13 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         return luck;
     }
     public void setHappiness(int happiness) {
-        this.happiness = happiness;
+        if (happiness < 0) {
+            this.happiness = 0;
+        } else if (happiness > 200) {
+            this.happiness = 200;
+        } else {
+            this.happiness = happiness;
+        }
     }
     public int getHappiness() {
         return happiness;
@@ -368,6 +376,13 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     }
     public void setGetDressed(boolean getDressed) {
         this.getDressed = getDressed;
+    }
+
+    public ArrayList<String> getAfternoonThings() {
+        return afternoonThings;
+    }
+    public ArrayList<String> getParkThings() {
+        return parkThings;
     }
 
 

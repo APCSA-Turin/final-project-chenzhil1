@@ -20,6 +20,8 @@ public class Map { //Used to handle any location related functionality
     // Student
     private static double schoolLatitude; // Latitude of the school
     private static double schoolLongitude;  // Longitude of the school
+    private static double parkLatitude; // Latitude of the park
+    private static double parkLongitude; // Longitude of the park
 
     // School
     private static String schoolName = ""; // Name of the school
@@ -234,6 +236,46 @@ public class Map { //Used to handle any location related functionality
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void findPark() {
+        while(parkLatitude == 0 && parkLongitude == 0) { // Loop until a valid park is found
+            double area = 0.09;
+            try {
+                String urlString = "https://api.geoapify.com/v2/places?categories=leisure.park&filter=rect:" + (longitude + area) + "," + (latitude + area) + "," + (longitude - area) + "," + (latitude - area) + "&limit=20&apiKey=4f2009d322ee4b4395e93c61180a2d0e";
+                JSONObject jsonResponse = getRequest(urlString);
+                if (jsonResponse == null) {
+                    System.out.println("Error: No response from API");
+                    return;
+                }
+                JSONArray features = jsonResponse.getJSONArray("features");
+                if (features.length() > 0) {
+                    for(int i = 0; i < features.length(); i++) {
+                        JSONObject properties = features.getJSONObject(i).getJSONObject("properties");
+                        if (properties.getString("address_line1").toLowerCase().contains("park")) {
+                            // Set park info if the name contains "park"
+                            parkLatitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
+                            parkLongitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                            break;
+                        }
+                    }
+                    System.out.println("Park Latitude: " + parkLatitude);
+                    System.out.println("Park Longitude: " + parkLongitude);
+                } else {
+                    System.out.println("No parks found, retrying...");
+                    area += 0.09; // Increase the search area
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static double getParkLatitude() {
+        return parkLatitude;
+    }
+    public static double getParkLongitude() {
+        return parkLongitude;
     }
 
 }
