@@ -37,7 +37,7 @@ public class Main extends Application { // Main class for the JavaFX application
             System.out.println("It is currently " + game.getTime() + " on " + game.getDate());
             System.out.println("You are a student at " + Map.getSchoolName() + " in " + Map.getCity() + ", " + Map.getState());
             scanner.nextLine();
-            int transitTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "drive");
+            int transitTime = game.getHomeSchoolTravelTime();
             if(transitTime >= 60) {
                 game.setSchoolHour(8, 30);
             }
@@ -84,7 +84,7 @@ public class Main extends Application { // Main class for the JavaFX application
                     game.addTime(5);
                 }
                 else if(game.getMorningThings().get(action - 1).equalsIgnoreCase("Check transit time")) {
-                    System.out.println("The transit time to school is " + transitTime + " minutes.");
+                    System.out.println("The drive time to school is " + transitTime + " minutes.");
                     System.out.println("School starts at " + game.getSchoolHour() + ":" + game.getSchoolMinute());
                     game.addTime(5);
                 }
@@ -218,20 +218,20 @@ public class Main extends Application { // Main class for the JavaFX application
                 case "Brush your teeth":
                     System.out.println("You brush your teeth.");
                     game.addTime(5);
-                    game.setBrushTeeth(true);
+                    game.setMorningStatus(0, true);
                     showScene(stage, action, game, transitTime, "scene3a");
                     return; 
                 case "Eat breakfast":
                     System.out.println("You cooked and ate breakfast.");
-                    game.setBreakfast(true);
+                    game.setMorningStatus(1, true);
                     game.addTime(30);
                     showScene(stage, action, game, transitTime, "scene3b");
                     return;
                 case "Get dressed":
                     System.out.println("You got dressed.");
                     game.addTime(10);
-                    game.setGetDressed(true);
-                    showScene(stage, action, game, transitTime, "scene3c"); 
+                    game.setMorningStatus(2, true);
+                    showScene(stage, action, game, transitTime, "scene3c");
                     return;
                 case "Check weather":
                     game.addTime(5);
@@ -454,17 +454,18 @@ public class Main extends Application { // Main class for the JavaFX application
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/class.png");
                 break;
             case "scene8a":
+                fullText = "";
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/schoolFrustrated.png");
-                if(!game.isBrushTeeth()) {
-                    fullText = "You did not brush your teeth, your breath stinks.";
+                if(!game.getMorningStatus()[0]) {
+                    fullText += "You did not brush your teeth, your breath stinks.";
                     game.setHappiness(game.getHappiness() - 10);
                 }
-                else if(!game.isBreakfast()) {
-                    fullText = "You did not eat breakfast, you feel hungry.";
+                if(!game.getMorningStatus()[1]) {
+                    fullText += "You did not eat breakfast, you feel hungry.";
                     game.setHappiness(game.getHappiness() - 10);
                 }
-                else if(!game.isGetDressed()) {
-                    fullText = "You did not get dressed, you feel felt unfit.";
+                if(!game.getMorningStatus()[2]) {
+                    fullText += "You did not get dressed, you feel felt unfit.";
                     game.setHappiness(game.getHappiness() - 10);
                 }
                 else {
@@ -535,8 +536,73 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
             case "scene12":
                 fullText = "It is now " + game.getTime() + "\nSchool is over!";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchool.png");
+                if((Weather.getWeather(game.getHour()) >= 51 && Weather.getWeather(game.getHour()) <= 67) || 
+                (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ) {
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchoolRain.png");
+                }
+                else if((Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77)) {
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchoolSnow.png");
+                }
+                else if(Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99) {
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchoolStorm.png");
+                }
+                else {
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchool.png");
+                }
                 break;
+            case "scene14":
+                if(game.getDestination().equals("Park")) {
+                    if((Weather.getWeather(game.getHour()) >= 51 && Weather.getWeather(game.getHour()) <= 67) ||
+                    (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ||
+                    (Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77) ||
+                    (Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99)) {
+                        fullText = "The weather is not suitable for going to the park, you decided to go home instead.";
+                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/parkBadWeather.png");
+                    }
+                    else {
+                        fullText = "You are on your way to the park, you feel excited!";
+                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sunny.png");
+                    }
+                }
+                else {
+                    fullText = game.weatherEvent();
+                    if((Weather.getWeather(game.getHour()) >= 51 && Weather.getWeather(game.getHour()) <= 67) || 
+                    (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ) {
+                        if(game.isUmbrellaPack()) {
+                            fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
+                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/rainUmbrella.png");
+                        }
+                        else {
+                            fullText = "You regret not bringing an umbrella." + "\n" + fullText;
+                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/rain.png");
+                        }
+                    }
+                    else if((Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77)) {
+                        if(game.isUmbrellaPack()) {
+                            fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
+                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/snowUmbrella.png");
+                        }
+                        else {
+                            fullText = "You regret not bringing an umbrella." + "\n" + fullText;
+                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/snow.png");
+                        }
+                    }
+                    else if(Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99) {
+                        if(game.isUmbrellaPack()) {
+                            fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
+                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/stormUmbrella.png");
+                        }
+                        else {
+                            fullText = "You regret not bringing an umbrella." + "\n" + fullText;
+                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/storm.png");
+                        }
+                    }
+                    else {
+                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sunny.png");
+                    }
+                    fullText = "You are now heading home.\nThe weather now is " + Weather.defineWeather(Weather.getWeather(game.getHour())) + "\n" + fullText;
+                    break;
+                }
             default:
                 break;
         }
@@ -626,7 +692,7 @@ public class Main extends Application { // Main class for the JavaFX application
                             }
                             break;
                         case "scene7":
-                            if(!game.isBreakfast() || !game.isBrushTeeth() || !game.isGetDressed()) {
+                            if(!game.getMorningStatus()[0] || !game.getMorningStatus()[1] || !game.getMorningStatus()[2]) {
                                 showScene(stage, name, game, transitTime, "scene8a");
                             }
                             else {
@@ -662,6 +728,19 @@ public class Main extends Application { // Main class for the JavaFX application
                         case "scene12":
                             showScene(stage, name, game, transitTime, "scene13", game.getAfternoonThings());
                             break;
+                        case "scene14" :
+                            if(game.getDestination().equals("Park")) {
+                                if((Weather.getWeather(game.getHour()) >= 51 && Weather.getWeather(game.getHour()) <= 67) ||
+                                (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ||
+                                (Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77) ||
+                                (Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99)) {
+                                    game.setDestination("Home");
+                                    showScene(stage, name, game, transitTime, "scene14");
+                                }
+                                else {
+                                    transitTime = game.getSchoolParkTravelTime();
+                                    showScene(stage, name, game, transitTime, "scene15");
+                                }
                         default:
 
                             break;
@@ -770,11 +849,12 @@ public class Main extends Application { // Main class for the JavaFX application
         }
         else if(sceneID.equals("scene13")) {
             if(action.equals("Go to park")) {
-                showScene(stage, name, game, transitTime, "scene14");
+                game.setDestination("Park");
             }
             else if(action.equals("Go home")) {
-                showScene(stage, name, game, transitTime, "scene15");
+                game.setDestination("Home");
             }
+            showScene(stage, name, game, transitTime, "scene14");
         }
     }
     

@@ -30,9 +30,11 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     private ArrayList<String> parkThings = new ArrayList<String>(Arrays.asList("Play with friends", "Play basketball", "Run track", "Play volleyball", "Play soccer", "Play badminton", "Go home"));
     private boolean textbook = false;
     private boolean homework = false;
-    private boolean breakfast = false;
-    private boolean brushTeeth = false;
-    private boolean getDressed = false;
+    private boolean[] morningStatus = new boolean[3]; //Array to keep track of morning activities, 0: Brush teeth, 1: Eat breakfast, 2: Get dressed
+    private String destination = ""; //Destination for the player to go to, used for GUI button
+    private int homeSchoolTravelTime = 0; //Travel time from home to school, used for GUI button
+    private int schoolParkTravelTime = 0; //Travel time from school to park, used for GUI button
+    private int ParkHomeTravelTime = 0; //Travel time from park to home, used for GUI button
     public GameLogic() {
         this.age = 0;
         this.date = "20XX-" + (int) (Math.random() * 12 + 1) + "-" + (int) (Math.random() * 28 + 1); // Random date;
@@ -59,6 +61,10 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             }
             Map.findSchool(); //Find school based on type
         }
+        Map.findPark();
+        homeSchoolTravelTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "drive");
+        schoolParkTravelTime = Map.getTransitTime(Map.getSchoolLatitude(), Map.getSchoolLongitude(), Map.getParkLatitude(), Map.getParkLongitude(), "drive");
+        ParkHomeTravelTime = Map.getTransitTime(Map.getParkLatitude(), Map.getParkLongitude(), Map.getLatitude(), Map.getLongitude(), "drive");
     }
 
 
@@ -359,31 +365,39 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     public void setHomework(boolean homework) {
         this.homework = homework;
     }
-    public boolean isBreakfast() {
-        return breakfast;
-    }
-    public void setBreakfast(boolean breakfast) {
-        this.breakfast = breakfast;
-    }
-    public boolean isBrushTeeth() {
-        return brushTeeth;
-    }
-    public void setBrushTeeth(boolean brushTeeth) {
-        this.brushTeeth = brushTeeth;
-    }
-    public boolean isGetDressed() {
-        return getDressed;
-    }
-    public void setGetDressed(boolean getDressed) {
-        this.getDressed = getDressed;
-    }
 
+
+    public boolean[] getMorningStatus() {
+        return morningStatus;
+    }
+    public void setMorningStatus(int index, boolean status) {
+        this.morningStatus[index] = status;
+    }
     public ArrayList<String> getAfternoonThings() {
         return afternoonThings;
     }
     public ArrayList<String> getParkThings() {
         return parkThings;
     }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+    public String getDestination() {
+        return destination;
+    }
+
+    public int getHomeSchoolTravelTime() {
+        return homeSchoolTravelTime;
+    }
+    public int getSchoolParkTravelTime() {
+        return schoolParkTravelTime;
+    }
+    public int getParkHomeTravelTime() {
+        return ParkHomeTravelTime;
+    }
+
+    
 
 
 
