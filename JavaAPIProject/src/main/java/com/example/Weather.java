@@ -3,14 +3,12 @@ package com.example;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
 public class Weather {
     private static double[] temperature = new double[24];
-    private static boolean debug = true;
+    private static boolean debug = false;
     private static int[] weather = new int[24];
     public static void findWeather() {
         //Find weather using Open Meteo API from the latitude and longitude of the map

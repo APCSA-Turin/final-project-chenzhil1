@@ -1,5 +1,4 @@
 package com.example;
-import org.json.JSONObject;
 /**
  * Hello world!
  *

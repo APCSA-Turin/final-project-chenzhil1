@@ -16,7 +16,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     private int minute;
     //Role of the player, can be Student, Teacher, or Parent, but currently only Student is implemented
     private String role;
-    private boolean debug = true; //Debug mode used to print debug information
+    private boolean debug = false; //Debug mode used to print debug information
     private int luck = (int) (Math.random() * 20 + 1); //Random luck value between 1 and 20
     private int happiness = (int) (Math.random() * 30 + 50); //Random happiness value between 50 and 80
     private int schoolHour = 8; // School hour is initialized to 8 AM, can be updated
@@ -28,6 +28,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     private ArrayList<String> morningThings = new ArrayList<String>(Arrays.asList("Brush your teeth", "Eat breakfast", "Get dressed", "Check weather", "Check transit time", "Pack your bag", "Play with phone", "Exit home"));
     private ArrayList<String> afternoonThings = new ArrayList<String>(Arrays.asList("Go to park", "Go home"));
     private ArrayList<String> parkThings = new ArrayList<String>(Arrays.asList("Play with friends", "Play basketball", "Run track", "Play volleyball", "Play soccer", "Play badminton", "Go home"));
+    private ArrayList<String> eveningThings = new ArrayList<String>(Arrays.asList("Do homework", "Play on phone", "Take a nap"));
     private boolean textbook = false;
     private boolean homework = false;
     private boolean[] morningStatus = new boolean[3]; //Array to keep track of morning activities, 0: Brush teeth, 1: Eat breakfast, 2: Get dressed
@@ -35,6 +36,11 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     private int homeSchoolTravelTime = 0; //Travel time from home to school, used for GUI button
     private int schoolParkTravelTime = 0; //Travel time from school to park, used for GUI button
     private int ParkHomeTravelTime = 0; //Travel time from park to home, used for GUI button
+    private String previousDestination = "";
+    private int homeworkTime = 0;
+    private int homeworkDone = 0;
+    private boolean dinner = false;
+    private boolean shower = false;
     public GameLogic() {
         this.age = 0;
         this.date = "20XX-" + (int) (Math.random() * 12 + 1) + "-" + (int) (Math.random() * 28 + 1); // Random date;
@@ -65,6 +71,16 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         homeSchoolTravelTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "drive");
         schoolParkTravelTime = Map.getTransitTime(Map.getSchoolLatitude(), Map.getSchoolLongitude(), Map.getParkLatitude(), Map.getParkLongitude(), "drive");
         ParkHomeTravelTime = Map.getTransitTime(Map.getParkLatitude(), Map.getParkLongitude(), Map.getLatitude(), Map.getLongitude(), "drive");
+        if(schoolParkTravelTime == -1) {
+            schoolParkTravelTime = 10;
+            ParkHomeTravelTime = 10;
+        }
+        if(debug) {
+            System.out.println(homeSchoolTravelTime);
+            System.out.println(schoolParkTravelTime);
+            System.out.println(ParkHomeTravelTime);
+
+        }
     }
 
 
@@ -234,7 +250,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
             }
         }
         System.out.println("You packed your bag.");
-
+        scanner.close();
     }
 
     public int getHour() {
@@ -396,7 +412,53 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     public int getParkHomeTravelTime() {
         return ParkHomeTravelTime;
     }
+    public String getPreviousDestination() {
+        return previousDestination;
+    }
 
+    public void setPreviousDestination(String previousDestination) {
+        this.previousDestination = previousDestination;
+    }
+
+    public ArrayList<String> getEveningThings() {
+        return eveningThings;
+    }
+
+    public int getHomeworkTime() {
+        return homeworkTime;
+    }
+
+    public void setHomeworkTime(int homeworkTime) {
+        this.homeworkTime = homeworkTime;
+    }
+
+    public int getHomeworkDone() {
+        return homeworkDone;
+    }
+
+    public void setHomeworkDone(int homeworkDone) {
+        this.homeworkDone = homeworkDone;
+    }
+
+    public boolean getDinner() {
+        return dinner;
+    }
+
+    public void setDinner(boolean din) {
+        dinner = din;
+    }
+
+    public void finishHomework() {
+        eveningThings.remove(0);
+    }
+    public boolean getShower() {
+        return shower;
+    }
+
+    public void setShower(boolean shower) {
+        this.shower = shower;
+    }
+    
     
 
 

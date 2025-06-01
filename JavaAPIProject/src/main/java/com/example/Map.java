@@ -16,12 +16,13 @@ public class Map { //Used to handle any location related functionality
     private static String country = ""; // Country name
     private static String city = ""; // City name
     private static String state = ""; // State name
-    private static boolean debug = true; //debug mode used to print debug information
+    private static boolean debug = false; //debug mode used to print debug information
     // Student
     private static double schoolLatitude; // Latitude of the school
     private static double schoolLongitude;  // Longitude of the school
     private static double parkLatitude; // Latitude of the park
     private static double parkLongitude; // Longitude of the park
+    private static String parkName = "";
 
     // School
     private static String schoolName = ""; // Name of the school
@@ -61,10 +62,11 @@ public class Map { //Used to handle any location related functionality
     }
 
     public static String findPlace(double latitude, double longitude) {
+        System.out.println("currently loading API datas, please stand by...");
         // Used to find the country, state, and city based on latitude and longitude
         String country = "";
         try {
-            String urlString = "https://api.bigdatacloud.net/data/reverse-geocode?latitude=" + latitude + "&longitude=" + longitude + "&localityLanguage=en&key=bdc_f7778da2781747fa9c9f12c9ba30a84b";
+            String urlString = "https://api.bigdatacloud.net/data/reverse-geocode?latitude=" + latitude + "&longitude=" + longitude + "&localityLanguage=en&key=bdc_aaf32bfc833846eb8448cdcdeee15185";
             JSONObject jsonResponse = getRequest(urlString);
             if (jsonResponse == null) {
                 System.out.println("Error: No response from API");
@@ -92,6 +94,8 @@ public class Map { //Used to handle any location related functionality
     }
 
     public static void findSchool() {
+        System.out.println("Still loading...");
+        System.out.println("If this section of code does not load in a while, restart the program.");
         // Used to find a school based on the latitude and longitude
         double area = 0.09;
         if (schoolType.equalsIgnoreCase("Elementary") || schoolType.equalsIgnoreCase("Middle") || schoolType.equalsIgnoreCase("High") || schoolType.equalsIgnoreCase("College")) {
@@ -190,7 +194,7 @@ public class Map { //Used to handle any location related functionality
         if(mode.equalsIgnoreCase("transit") || mode.equalsIgnoreCase("drive") || mode.equalsIgnoreCase("walk") || mode.equalsIgnoreCase("bike")) {
                         
             try {
-                String urlString = "https://api.geoapify.com/v1/routing?waypoints=" + lat1 + "," + long1 + "|" + lat2 + "," + long2 + "&mode=" + mode + "&apiKey=4f2009d322ee4b4395e93c61180a2d0e";
+                String urlString = "https://api.geoapify.com/v1/routing?waypoints=" + lat1 + "," + long1 + "|" + lat2 + "," + long2 + "&mode=" + "drive" + "&apiKey=4f2009d322ee4b4395e93c61180a2d0e";
                 JSONObject jsonResponse = getRequest(urlString);
                 if (jsonResponse == null) {
                     System.out.println("Error: No response from API");
@@ -239,7 +243,8 @@ public class Map { //Used to handle any location related functionality
     }
 
     public static void findPark() {
-        while(parkLatitude == 0 && parkLongitude == 0) { // Loop until a valid park is found
+        int repeat = 0;
+        while(parkLatitude == 0 && parkLongitude == 0 && repeat <=5) { // Loop until a valid park is found
             double area = 0.09;
             try {
                 String urlString = "https://api.geoapify.com/v2/places?categories=leisure.park&filter=rect:" + (longitude + area) + "," + (latitude + area) + "," + (longitude - area) + "," + (latitude - area) + "&limit=20&apiKey=4f2009d322ee4b4395e93c61180a2d0e";
@@ -250,12 +255,15 @@ public class Map { //Used to handle any location related functionality
                 }
                 JSONArray features = jsonResponse.getJSONArray("features");
                 if (features.length() > 0) {
+                    parkLatitude = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                    parkLongitude = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
                     for(int i = 0; i < features.length(); i++) {
                         JSONObject properties = features.getJSONObject(i).getJSONObject("properties");
                         if (properties.getString("address_line1").toLowerCase().contains("park")) {
                             // Set park info if the name contains "park"
                             parkLatitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
                             parkLongitude = features.getJSONObject(i).getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+                            parkName = features.getJSONObject(i).getJSONObject("properties").getString("address_line1");
                             break;
                         }
                     }
@@ -268,6 +276,7 @@ public class Map { //Used to handle any location related functionality
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            repeat ++;
         }
     }
 
@@ -276,6 +285,13 @@ public class Map { //Used to handle any location related functionality
     }
     public static double getParkLongitude() {
         return parkLongitude;
+    }
+
+    public static String getParkName() {
+        if(parkName.equals("")) {
+            parkName = "Leif Ericson Park";
+        }
+        return parkName;
     }
 
 }

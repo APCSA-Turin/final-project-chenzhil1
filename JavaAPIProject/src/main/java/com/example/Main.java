@@ -4,18 +4,12 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.lang.reflect.Array;
 import java.util.*;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -162,7 +156,7 @@ public class Main extends Application { // Main class for the JavaFX application
         System.out.println("Game by Chen Zhi Lin");
         System.out.println("GUI is open on the next browser tab");
         System.out.println("If you want to play the console version with more features, please run the program with debug mode enabled");
-        System.out.println("Currently working on afternoon and evening scenes"); 
+        System.out.println("Currently working fixing bugs"); 
 
         // Ask for user's name using a popup dialog
         TextInputDialog dialog = new TextInputDialog("");
@@ -174,15 +168,14 @@ public class Main extends Application { // Main class for the JavaFX application
         if (!result.isPresent()) return;
         String name = result.get();
         //After the user enters their name, initialize the game
-        int transitTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "drive");
-        if(transitTime >= 60) {
+        if(game.getHomeSchoolTravelTime() >= 60) {
             game.setSchoolHour(8, 30);
         }
-        else if (transitTime > 120) {
-            game.setSchoolHour(6,transitTime /10 * 10 + 10);
+        else if (game.getHomeSchoolTravelTime() > 120) {
+            game.setSchoolHour(6,game.getHomeSchoolTravelTime() /10 * 10 + 10);
             game.updateTime(1);
         }
-        showScene(primaryStage, name, game, transitTime, "scene1"); // Show the first scene
+        showScene(primaryStage, name, game, "scene1"); // Show the first scene
     }
 
 
@@ -207,11 +200,11 @@ public class Main extends Application { // Main class for the JavaFX application
     }
 
 
-    public void handleMorningChoice(String action, String name, GameLogic game, int transitTime, Stage stage) {
+    public void handleMorningChoice(String action, String name, GameLogic game, Stage stage) {
         //This method handles the user's choice in the morning scene
         if((game.getHour() >= game.getSchoolHour() && game.getMinute() >= game.getSchoolMinute() - 15) ||
             (game.getHour() > game.getSchoolHour() || (game.getHour() == game.getSchoolHour() - 1 && game.getMinute() >= (game.getSchoolMinute() + 45)))) {
-            showScene(stage, name, game, transitTime, "sceneForce");
+            showScene(stage, name, game, "sceneForce");
         }
         else {
             switch(action) {
@@ -219,43 +212,43 @@ public class Main extends Application { // Main class for the JavaFX application
                     System.out.println("You brush your teeth.");
                     game.addTime(5);
                     game.setMorningStatus(0, true);
-                    showScene(stage, action, game, transitTime, "scene3a");
+                    showScene(stage, action, game, "scene3a");
                     return; 
                 case "Eat breakfast":
                     System.out.println("You cooked and ate breakfast.");
                     game.setMorningStatus(1, true);
                     game.addTime(30);
-                    showScene(stage, action, game, transitTime, "scene3b");
+                    showScene(stage, action, game, "scene3b");
                     return;
                 case "Get dressed":
                     System.out.println("You got dressed.");
                     game.addTime(10);
                     game.setMorningStatus(2, true);
-                    showScene(stage, action, game, transitTime, "scene3c");
+                    showScene(stage, action, game, "scene3c");
                     return;
                 case "Check weather":
                     game.addTime(5);
-                    showScene(stage, action, game, transitTime, "scene3d");
+                    showScene(stage, action, game, "scene3d");
                     return;
                 case "Check transit time":
-                    System.out.println("The transit time to school is " + transitTime + " minutes.");
+                    System.out.println("The transit time to school is " + game.getHomeSchoolTravelTime() + " minutes.");
                     System.out.println("School starts at " + game.getSchoolHour() + ":" + game.getSchoolMinute());
                     game.addTime(5);
-                    showScene(stage, action, game, transitTime, "scene3e");
+                    showScene(stage, action, game, "scene3e");
                     return;
                 case "Pack your bag":
                     game.checkReady();
                     game.addTime(10);
-                    showScene(stage, name, game, transitTime, "scene3f", yesNoOption);
+                    showScene(stage, name, game, "scene3f", yesNoOption);
                     return;
                 case "Play with phone":
                     int phoneTime = (int)(Math.random() * 6 + 1) * 5;
                     game.addTime(phoneTime);
                     System.out.println("You played with your phone.");
-                    showScene(stage, name, game, transitTime, "scene3g");
+                    showScene(stage, name, game, "scene3g");
                     return;
                 case "Exit home":
-                    showScene(stage, name, game, transitTime, "scene4");
+                    showScene(stage, name, game, "scene4");
                 return;
             }
         }
@@ -281,13 +274,13 @@ public class Main extends Application { // Main class for the JavaFX application
             // This code will run after the text is fully displayed
                 scene1.setOnKeyPressed(event -> {
                 if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
-                    showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                    showScene(stage, name, game, "scene3", game.getMorningThings());
                 }
             });
         });
     }
 
-    public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID) {
+    public void showScene(Stage stage, String name, GameLogic game, String sceneID) {
         //This method is used to display the scene based on the sceneID
         Label label = new Label();
         label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
@@ -322,7 +315,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/weather.png");
                 break;
             case "scene3e":
-                fullText = "The transit time to school is " + transitTime + " minutes." + "\n" + "It is now " + game.getTime();
+                fullText = "The transit time to school is " + game.getHomeSchoolTravelTime() + " minutes." + "\n" + "It is now " + game.getTime();
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/transit.png");
                 break;
             case "scene3f1":
@@ -422,7 +415,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "The weather now is " + Weather.defineWeather(Weather.getWeather(game.getHour())) + "\n" + fullText;
                 break;
             case "scene6":
-                game.addTime(transitTime);
+                game.addTime(game.getHomeSchoolTravelTime());
                 game.updateTime(0);
                 fullText = "You arrived at school at " + game.getTime() + "\n" + game.checkLateSchool();
                 if(game.checkLateSchool().equals("You are late for school!")) {
@@ -457,11 +450,11 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "";
                 image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/schoolFrustrated.png");
                 if(!game.getMorningStatus()[0]) {
-                    fullText += "You did not brush your teeth, your breath stinks.";
+                    fullText += "You did not brush your teeth, your breath stinks.\n";
                     game.setHappiness(game.getHappiness() - 10);
                 }
                 if(!game.getMorningStatus()[1]) {
-                    fullText += "You did not eat breakfast, you feel hungry.";
+                    fullText += "You did not eat breakfast, you feel hungry.\n";
                     game.setHappiness(game.getHappiness() - 10);
                 }
                 if(!game.getMorningStatus()[2]) {
@@ -601,8 +594,129 @@ public class Main extends Application { // Main class for the JavaFX application
                         image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sunny.png");
                     }
                     fullText = "You are now heading home.\nThe weather now is " + Weather.defineWeather(Weather.getWeather(game.getHour())) + "\n" + fullText;
-                    break;
                 }
+                break;
+            case "scene15":
+                game.addTime(game.getSchoolParkTravelTime());
+                game.updateTime(0);
+                fullText = "You arrived at " + Map.getParkName();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/park.png");
+                break;
+            case "scene16a":
+                fullText = "You played with your friends in the park";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/friends.png");
+                break;
+            case "scene16b":
+                fullText = "You played basketball in the park";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/basketball.png");
+                break;
+            case "scene16c": 
+                fullText = "You ran track in the park";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/track.png");
+                break;
+            case "scene16d":
+                fullText = "You played volleyball in the park";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/volleyball.png");
+                break;
+            case "scene16e":
+                fullText = "You played soccer in the park";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/soccer.png");
+                break;
+            case "scene16f":
+                fullText = "You played badminton in the park";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/badminton.png");
+                break;
+            case "sceneForce2":
+                fullText = "Your mom called you to come home for dinner";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/momCall.png");
+                break;
+            case "scene17":
+                if(game.getPreviousDestination().equals("Park")) {
+                    game.addTime(game.getParkHomeTravelTime());
+                }
+                else {
+                    game.addTime(game.getHomeSchoolTravelTime());
+                }
+                game.addTime(-1 * (game.getMinute() % 5));
+                game.updateTime(0);
+                game.setHomeworkTime((int)(Math.random() * 13 + 12) * 5);
+                fullText = "You arrived home, it is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/home.png");
+                break;
+            case "scene18a":
+                int timeHomework = (int) (Math.random() * 6 + 1) * 5;
+                if(timeHomework > game.getHomeworkTime() - game.getHomeworkDone()) {
+                    timeHomework = game.getHomeworkTime() - game.getHomeworkDone();
+                }
+                game.setHomeworkDone(timeHomework);
+                game.addTime(timeHomework);
+                game.updateTime(0);
+                fullText = "Ypu have a total of " + game.getHomeworkTime() + " minutes of homework" + "\n"
+                + "You have done " + game.getHomeworkDone() + " minutes of work";
+                if(game.getHomeworkDone() == game.getHomeworkTime()) {
+                    game.finishHomework();
+                    fullText += "\nYou have finished doing homework";
+                }
+                fullText += "\nIt is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/doHomework.png");
+                break;
+            case "scene18b":
+                int timePhone = (int) (Math.random() * 6 + 1) * 5;
+                game.addTime(timePhone);
+                game.updateTime(0);
+                fullText = "You decided to play on your phone \n" + 
+                "It is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/phone.png");
+                break;
+            case "scene18c":
+                int napTime = (int) (Math.random() * 6 + 1) * 5;
+                game.addTime(napTime);
+                game.updateTime(0);
+                if(napTime > 15) {
+                    game.setHomeworkTime(game.getHomeworkTime() - napTime + 15);
+                }
+                else {
+                    game.setHomeworkTime(game.getHomeworkTime() - 5);
+                }
+                fullText = "You decided to take a nap \n" +
+                "it is now " + game.getTime() + "\n You feel more productive.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/nap.png");
+            case "sceneForce3":
+                fullText = "It is now " + game.getTime() + "\nYour mom came in to call you for dinner";
+                if(game.getHomeworkDone() > (double)(game.getHomeworkTime()) / 8.0) {
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dinner.png");
+                }
+                else {
+                    fullText += "\nYou have not done much of your homework";
+                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dinnerAngry.png");
+                }
+                game.addTime(60);
+                game.updateTime(0);
+                break;
+            case "scene19":
+                fullText = "You finished your dinner, it is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dinnerFinish.png");
+                break;
+            case "sceneForce4":
+                fullText = "It is " + game.getTime() + "\nYou have to take a shower now.";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/shower.png"); 
+                break;
+            case "scene20":
+                fullText = "You came back from the shower, " + "\nIt is now " + game.getTime();
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/showerFinish.png");
+                break;
+            case "scene21":
+                fullText = "It is now " + game.getTime() + "\nYou are going to brush your teeth";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/brush.png");
+                game.addTime(10);
+                game.updateTime(0);
+                break;
+            case "scene22":
+                fullText = "It is now " + game.getTime() + "\nYou are ready to sleep" + 
+                "\nGood night!";
+                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sleep.png");
+                break;
+
             default:
                 break;
         }
@@ -625,10 +739,10 @@ public class Main extends Application { // Main class for the JavaFX application
                 if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
                     switch (sceneID) {
                         case "scene1":
-                            showScene(stage, name, game, transitTime, "scene2");
+                            showScene(stage, name, game, "scene2");
                             break;
                         case "scene2":
-                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                            showScene(stage, name, game, "scene3", game.getMorningThings());
                             break;
                         case "scene3a":
                             for(int i = 0; i < game.getMorningThings().size(); i++) {
@@ -636,7 +750,7 @@ public class Main extends Application { // Main class for the JavaFX application
                                     game.getMorningThings().remove(i);
                                 }
                             }
-                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                            showScene(stage, name, game, "scene3", game.getMorningThings());
                             break;
                         case "scene3b":
                             for(int i = 0; i < game.getMorningThings().size(); i++) {
@@ -644,7 +758,7 @@ public class Main extends Application { // Main class for the JavaFX application
                                     game.getMorningThings().remove(i);
                                 }
                             }
-                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                            showScene(stage, name, game, "scene3", game.getMorningThings());
                             break;
                         case "scene3c":
                             for(int i = 0; i < game.getMorningThings().size(); i++) {
@@ -652,81 +766,83 @@ public class Main extends Application { // Main class for the JavaFX application
                                     game.getMorningThings().remove(i);
                                 }
                             }
-                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                            showScene(stage, name, game, "scene3", game.getMorningThings());
                             break;
                         case "scene3d":
                         case "scene3e":
                         case "scene3g":
-                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                            showScene(stage, name, game, "scene3", game.getMorningThings());
                             break;
                         case "scene3f1":
                         case "scene3f1a":
-                            showScene(stage, name, game, transitTime, "scene3f2", yesNoOption);
+                            showScene(stage, name, game, "scene3f2", yesNoOption);
                             break;
                         case "scene3f2":
                         case "scene3f2a":
-                            showScene(stage, name, game, transitTime, "scene3f3", yesNoOption);
+                            showScene(stage, name, game, "scene3f3", yesNoOption);
                             break;
                         case "scene3f3":
                         case "scene3f3a":
-                            showScene(stage, name, game, transitTime, "scene3f3b");
+                            showScene(stage, name, game, "scene3f3b");
                             break;
                         case "scene3f3b":
-                            showScene(stage, name, game, transitTime, "scene3", game.getMorningThings());
+                            showScene(stage, name, game, "scene3", game.getMorningThings());
                             break;
                         case "sceneForce":
-                            showScene(stage, name, game, transitTime, "scene4");
+                            showScene(stage, name, game, "scene4");
                             break;
                         case "scene4":
-                            showScene(stage, name, game, transitTime, "scene5");
+                            showScene(stage, name, game, "scene5");
                             break;
                         case "scene5":
-                            showScene(stage, name, game, transitTime, "scene6");
+                            showScene(stage, name, game, "scene6");
                             break;
                         case "scene6":
                             if(game.checkLateSchool().equals("You are late for school!")) {
-                                showScene(stage, name, game, transitTime, "scene8");
+                                showScene(stage, name, game, "scene8");
                             }
                             else {
-                                showScene(stage, name, game, transitTime, "scene7");
+                                showScene(stage, name, game, "scene7");
                             }
                             break;
                         case "scene7":
                             if(!game.getMorningStatus()[0] || !game.getMorningStatus()[1] || !game.getMorningStatus()[2]) {
-                                showScene(stage, name, game, transitTime, "scene8a");
+                                showScene(stage, name, game, "scene8a");
                             }
                             else {
                                 if(!game.isHomework() || !game.isTextbook()) {
-                                    showScene(stage, name, game, transitTime, "scene8b");
+                                    showScene(stage, name, game, "scene8b");
                                 }
-                                showScene(stage, name, game, transitTime, "scene8");
+                                else {
+                                    showScene(stage, name, game,"scene8");
+                                }
                             }
                             break;
                         case "scene8a":
                             if(!game.isHomework() || !game.isTextbook()) {
-                                showScene(stage, name, game, transitTime, "scene8b");
+                                showScene(stage, name, game, "scene8b");
                             }
                             else {
-                                showScene(stage, name, game, transitTime, "scene8");
+                                showScene(stage, name, game, "scene8");
                             }
                             break;
                         case "scene8b":
-                            showScene(stage, name, game, transitTime, "scene8");
+                            showScene(stage, name, game, "scene8");
                             break;
                         case "scene8" :
-                            showScene(stage, name, game, transitTime, "scene9");
+                            showScene(stage, name, game, "scene9");
                             break;
                         case "scene9":
-                            showScene(stage, name, game, transitTime, "scene10");
+                            showScene(stage, name, game, "scene10");
                             break;
                         case "scene10":
-                            showScene(stage, name, game, transitTime, "scene11");
+                            showScene(stage, name, game, "scene11");
                             break;
                         case "scene11":
-                            showScene(stage, name, game, transitTime, "scene12");
+                            showScene(stage, name, game, "scene12");
                             break;
                         case "scene12":
-                            showScene(stage, name, game, transitTime, "scene13", game.getAfternoonThings());
+                            showScene(stage, name, game, "scene13", game.getAfternoonThings());
                             break;
                         case "scene14" :
                             if(game.getDestination().equals("Park")) {
@@ -735,12 +851,49 @@ public class Main extends Application { // Main class for the JavaFX application
                                 (Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77) ||
                                 (Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99)) {
                                     game.setDestination("Home");
-                                    showScene(stage, name, game, transitTime, "scene14");
+                                    showScene(stage, name, game, "scene14");
                                 }
                                 else {
-                                    transitTime = game.getSchoolParkTravelTime();
-                                    showScene(stage, name, game, transitTime, "scene15");
+                                    showScene(stage, name, game, "scene15");
                                 }
+                            }
+                            else {
+                                showScene(stage, name, game, "scene17");
+                            }
+                            break;
+                        case "scene15":
+                            showScene(stage, name, game, "scene16", game.getParkThings());
+                            break;
+                        case "scene16a":
+                        case "scene16b":
+                        case "scene16c":
+                        case "scene16d":
+                        case "scene16e":
+                        case "scene16f":
+                            showScene(stage, name, game, "scene16", game.getParkThings());
+                            break;
+                        case "scene17":
+                            showScene(stage, name, game, "scene18", game.getEveningThings());
+                            break;
+                        case "scene18a":
+                        case "scene18b":
+                        case "scene18c":
+                        case "scene19":
+                        case "scene20":
+                            showScene(stage, name, game,"scene18", game.getEveningThings());
+                            break;
+                        case "sceneForce3":
+                            showScene(stage, name, game, "scene19");
+                            break;
+                        case "sceneForce4":
+                            showScene(stage, name, game, "scene20");
+                            break;
+                        case "scene21":
+                            showScene(stage, name, game, "scene22");
+                            break;
+                        case "scene22":
+                            ArrayList<String> endList = new ArrayList<String>(Arrays.asList("Restart game", "Exit Game"));
+                            showScene(stage, name, game, "end", endList);
                         default:
 
                             break;
@@ -751,7 +904,7 @@ public class Main extends Application { // Main class for the JavaFX application
 
     }
 
-    public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID, ArrayList<String> buttonsList) {
+    public void showScene(Stage stage, String name, GameLogic game, String sceneID, ArrayList<String> buttonsList) {
         //This method is used when a scene allows user dicision.
         Label label = new Label();
         label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
@@ -773,6 +926,16 @@ public class Main extends Application { // Main class for the JavaFX application
         else if(sceneID.equals("scene13")) {
             label.setText("Where do you want to go now?");
         }
+        else if(sceneID.equals("scene16")) {
+            label.setText("It is now " + game.getTime() + "\n" + "What do you want to do now?"); 
+        }
+        else if(sceneID.equals("scene18")) {
+            label.setText("WHat do you want to do now?");
+        }
+        else if(sceneID.equals("end")) {
+            label.setText("This is the end of the game\n Thank you for playing!" + 
+            "Now you may:");
+        }
             
 
 
@@ -780,22 +943,31 @@ public class Main extends Application { // Main class for the JavaFX application
             Button button = new Button(action);
             button.setStyle("-fx-font-size: 18px; -fx-padding: 10px 20px;");
             if(sceneID.equals("scene3")) {
-                button.setOnAction(e -> handleMorningChoice(action, name, game, transitTime, stage));
+                button.setOnAction(e -> handleMorningChoice(action, name, game, stage));
             }
             else if(sceneID.equals("scene3f")) {
-                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+                button.setOnAction(e -> yesNoOptions(stage, name, game, sceneID, action));
             }
             else if(sceneID.equals("scene3f2")) {
-                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+                button.setOnAction(e -> yesNoOptions(stage, name, game, sceneID, action));
             }
             else if(sceneID.equals("scene3f3")) {
-                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+                button.setOnAction(e -> yesNoOptions(stage, name, game, sceneID, action));
             }
             else if(sceneID.equals("scene13")) {
-                button.setOnAction(e -> yesNoOptions(stage, name, game, transitTime, sceneID, action));
+                button.setOnAction(e -> yesNoOptions(stage, name, game, sceneID, action));
+            }
+            else if(sceneID.equals("scene16")) {
+                button.setOnAction(e -> handleAfternoonChoice(action, name, game, stage));
+            }
+            else if(sceneID.equals("scene18")) {
+                button.setOnAction(e -> handleEveningChoice(action, name, game, stage));
+            }
+            else if(sceneID.equals("end")) {
+                button.setOnAction(e -> yesNoOptions(stage, name, game, sceneID, action));
             }
             else {
-                button.setOnAction(e -> showScene(stage, name, game, transitTime, action));
+                button.setOnAction(e -> showScene(stage, name, game, action));
             }
 
             buttons.add(button);
@@ -820,45 +992,149 @@ public class Main extends Application { // Main class for the JavaFX application
         }
     }
 
-    public void yesNoOptions(Stage stage, String name, GameLogic game, int transitTime, String sceneID, String action) {
+    public void yesNoOptions(Stage stage, String name, GameLogic game, String sceneID, String action) {
         //This method is used to display the yes/no options
         if(sceneID.equals("scene3f")) {
             if(action.equals("Yes")) {
-                showScene(stage, name, game, transitTime, "scene3f1");
+                showScene(stage, name, game, "scene3f1");
             }
             else if(action.equals("No")) {
-                showScene(stage, name, game, transitTime, "scene3f1a");
+                showScene(stage, name, game, "scene3f1a");
             }
 
         }
         else if(sceneID.equals("scene3f2")) {
             if(action.equals("Yes")) {
-                showScene(stage, name, game, transitTime, "scene3f2");
+                showScene(stage, name, game, "scene3f2");
             }
             else if(action.equals("No")) {
-                showScene(stage, name, game, transitTime, "scene3f2a");
+                showScene(stage, name, game, "scene3f2a");
             }
         }
         else if(sceneID.equals("scene3f3")) {
             if(action.equals("Yes")) {
-                showScene(stage, name, game, transitTime, "scene3f3");
+                showScene(stage, name, game, "scene3f3");
             }
             else if(action.equals("No")) {
-                showScene(stage, name, game, transitTime, "scene3f3a");
+                showScene(stage, name, game, "scene3f3a");
             }
         }
         else if(sceneID.equals("scene13")) {
             if(action.equals("Go to park")) {
+                game.setPreviousDestination("School");
                 game.setDestination("Park");
             }
             else if(action.equals("Go home")) {
+                game.setPreviousDestination("School");
                 game.setDestination("Home");
             }
-            showScene(stage, name, game, transitTime, "scene14");
+            showScene(stage, name, game, "scene14");
+        }
+        else if(sceneID.equals("end")) {
+            GameLogic newGame = new GameLogic();
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("A Day in A City");
+            dialog.setHeaderText("Please enter your name");
+            dialog.setContentText("Name:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                String newName = result.get();
+                if(newGame.getHomeSchoolTravelTime() >= 60) {
+                    newGame.setSchoolHour(8, 30);
+                }
+                else if (newGame.getHomeSchoolTravelTime() > 120) {
+                    newGame.setSchoolHour(6, newGame.getHomeSchoolTravelTime() / 10 * 10 + 10);
+                    newGame.updateTime(1);
+                }
+                showScene(stage, newName, newGame, "scene1");
+            }
+            else if(action.equals("Exit game")) {
+                stage.close();
+            }
         }
     }
-    
 
+    public void handleAfternoonChoice(String action, String name, GameLogic game, Stage stage) {
 
+        if ((game.getHour() > 17) || (game.getHour() == 17 && game.getMinute() >= 15)) {
+            game.setPreviousDestination("Park");
+            showScene(stage, name, game, "sceneForce2");
+        } 
+        else {
+            switch(action) {
+                case "Play with friends":
+                    game.setHappiness(game.getHappiness() + 10);
+                    game.addTime(((int) (Math.random() * 6 + 1)) * 5);
+                    game.updateTime(0);
+                    showScene(stage, name, game, "scene16a");
+                    break;
+                case "Play basketball":
+                    game.setHappiness(game.getHappiness() + 10);
+                    game.addTime(((int) (Math.random() * 6 + 1)) * 5);
+                    game.updateTime(0);
+                    showScene(stage, name, game, "scene16b");
+                    break;
+                case "Run track":
+                    game.setHappiness(game.getHappiness() + 10);
+                    game.addTime(((int) (Math.random() * 6 + 1)) * 5);
+                    game.updateTime(0);
+                    showScene(stage, name, game, "scene16c");
+                    break;
+                case "Play volleyball":
+                    game.setHappiness(game.getHappiness() + 10);
+                    game.addTime(((int) (Math.random() * 6 + 1)) * 5);
+                    game.updateTime(0);
+                    showScene(stage, name, game, "scene16d");
+                    break;
+                case "Play soccer":
+                    game.setHappiness(game.getHappiness() + 10);
+                    game.addTime(((int) (Math.random() * 6 + 1)) * 5);
+                    game.updateTime(0);
+                    showScene(stage, name, game, "scene16e");
+                    break;
+                case "Play badminton":
+                    game.setHappiness(game.getHappiness() + 7);
+                    game.addTime(((int) (Math.random() * 6 + 1)) * 5);
+                    game.updateTime(0);
+                    showScene(stage, name, game, "scene16f");
+                    break;
+                case "Go home":
+                    game.setPreviousDestination("Park");
+                    game.setDestination("Home");
+                    showScene(stage, name, game, "scene14");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void handleEveningChoice(String action, String name, GameLogic game, Stage stage) {
+        if ((game.getHour() >= 18) && !game.getDinner()) {
+            game.setDinner(true);
+            showScene(stage, name, game, "sceneForce3");
+        }
+        else if ((game.getHour() >= 20) && !game.getShower()) {
+            game.setShower(true);
+            showScene(stage, name, game, "sceneForce4");
+        }
+        else if(game.getHour() >= 23) {
+            showScene(stage, name, game, "scene21");
+        }
+        else {
+            switch(action) {
+                case "Do homework":
+                    showScene(stage, name, game, "scene18a");
+                    break;
+                case "Play on phone":
+                    showScene(stage, name, game, "scene18b");
+                    break;
+                case "Take a nap":
+                    showScene(stage, name, game, "scene18c");
+                    break;
+            }
+        }
+
+    }
 }
 
