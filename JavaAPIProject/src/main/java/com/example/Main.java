@@ -1,3 +1,4 @@
+
 package com.example;
 
 import javafx.application.Application;
@@ -872,6 +873,10 @@ public class Main extends Application { // Main class for the JavaFX application
                         case "scene16f":
                             showScene(stage, name, game, "scene16", game.getParkThings());
                             break;
+                        case "sceneForce2":
+                            game.setDestination("Home");
+                            showScene(stage, name, game, "scene14");
+                            break;
                         case "scene17":
                             showScene(stage, name, game, "scene18", game.getEveningThings());
                             break;
@@ -930,7 +935,7 @@ public class Main extends Application { // Main class for the JavaFX application
             label.setText("It is now " + game.getTime() + "\n" + "What do you want to do now?"); 
         }
         else if(sceneID.equals("scene18")) {
-            label.setText("WHat do you want to do now?");
+            label.setText("What do you want to do now?");
         }
         else if(sceneID.equals("end")) {
             label.setText("This is the end of the game\n Thank you for playing!" + 
