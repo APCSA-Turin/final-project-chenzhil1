@@ -68,8 +68,17 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         }
         Map.findPark();
         homeSchoolTravelTime = Map.getTransitTime(Map.getLatitude(), Map.getLongitude(), Map.getSchoolLatitude(), Map.getSchoolLongitude(), "drive");
+        if(homeSchoolTravelTime > 120) {
+            homeSchoolTravelTime = 120;
+        }
         schoolParkTravelTime = Map.getTransitTime(Map.getSchoolLatitude(), Map.getSchoolLongitude(), Map.getParkLatitude(), Map.getParkLongitude(), "drive");
+        if(homeSchoolTravelTime > 120) {
+            homeSchoolTravelTime = 120;
+        }
         ParkHomeTravelTime = Map.getTransitTime(Map.getParkLatitude(), Map.getParkLongitude(), Map.getLatitude(), Map.getLongitude(), "drive");
+        if(ParkHomeTravelTime > 120) {
+            ParkHomeTravelTime = 120;
+        }
         if(schoolParkTravelTime == -1) {
             schoolParkTravelTime = 10;
             ParkHomeTravelTime = 10;
