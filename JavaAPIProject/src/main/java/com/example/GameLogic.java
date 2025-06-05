@@ -17,7 +17,7 @@ public class GameLogic { //Main game logic class, accessed by the main class for
     //Role of the player, can be Student, Teacher, or Parent, but currently only Student is implemented
     private String role;
     private boolean debug = false; //Debug mode used to print debug information
-    private int luck = (int) (Math.random() * 20 + 1); //Random luck value between 1 and 20
+
     private int happiness = (int) (Math.random() * 30 + 50); //Random happiness value between 50 and 80
     private int schoolHour = 8; // School hour is initialized to 8 AM, can be updated
     private int schoolMinute = 0;
@@ -48,7 +48,6 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         this.hour = 6;
         this.minute = 0;
         this.role = "Student";
-        this.luck = 0;
         this.happiness = 0;
         Map.getMap(); //Initialize random location
         Weather.findWeather(); // Initialize weather
@@ -325,12 +324,6 @@ public class GameLogic { //Main game logic class, accessed by the main class for
         return weatherNow;
     }
 
-    public void setLuck(int luck) {
-        this.luck = luck;
-    }
-    public int getLuck() {
-        return luck;
-    }
     public void setHappiness(int happiness) {
         if (happiness < 0) {
             this.happiness = 0;

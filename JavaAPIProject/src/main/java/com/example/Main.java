@@ -293,49 +293,49 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "Good morning " + name + "!\n" +
                 "It is currently " + game.getTime() + " on " + game.getDate() + "\n" +
                 "You are a student at " + Map.getSchoolName() + " in " + Map.getCity() + ", " + Map.getState();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/wakeup.png");
+                image = new Image(getClass().getResource("/com/example/images/wakeup.png").toExternalForm());
                 break;
             case "scene2":
                 fullText = "You just woke up, school starts at " + game.formatTime(game.getSchoolHour(), game.getSchoolMinute());
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/wakeup.png");
+                image = new Image(getClass().getResource("/com/example/images/wakeup.png").toExternalForm());
                 break;
             case "scene3a":
                 fullText = "You brushed your teeth." + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/brush.png");
+                image = new Image(getClass().getResource("/com/example/images/brush.png").toExternalForm());
                 break;
             case "scene3b":
                 fullText = "You ate breakfast" + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/breakfast.png");
+                image = new Image(getClass().getResource("/com/example/images/breakfast.png").toExternalForm());
                 break;
             case "scene3c":
                 fullText = "You got dressed"  + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dressed.png");
+                image = new Image(getClass().getResource("/com/example/images/dressed.png").toExternalForm());
                 break;
             case "scene3d":
                 fullText = game.getWeather()  + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/weather.png");
+                image = new Image(getClass().getResource("/com/example/images/weather.png").toExternalForm());
                 break;
             case "scene3e":
                 fullText = "The transit time to school is " + game.getHomeSchoolTravelTime() + " minutes." + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/transit.png");
+                image = new Image(getClass().getResource("/com/example/images/transit.png").toExternalForm());
                 break;
             case "scene3f1":
                 game.setLunch(true);
                 fullText = "You brought your lunch.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/lunch.png");
+                image = new Image(getClass().getResource("/com/example/images/lunch.png").toExternalForm());
                 break;
             case "scene3f1a":
                 fullText = "You did not bring your lunch.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/table.png");
+                image = new Image(getClass().getResource("/com/example/images/table.png").toExternalForm());
                 break;
             case "scene3f2":
                 game.setUmbrellaPack(true);
                 fullText = "You brought an umbrella.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/umbrella.png");
+                image = new Image(getClass().getResource("/com/example/images/umbrella.png").toExternalForm());
                 break;
             case "scene3f2a":
                 fullText = "You did not bring an umbrella.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/table.png");
+                image = new Image(getClass().getResource("/com/example/images/table.png").toExternalForm());
                 break;
             case "scene3f3":
                 game.addTime(5);
@@ -343,39 +343,39 @@ public class Main extends Application { // Main class for the JavaFX application
                 if(game.getReady() == 0) {
                     game.setHomework(true);
                     fullText = "You forgot your homework! Phew, good that you checked your bag.";
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/homework.png");
+                    image = new Image(getClass().getResource("/com/example/images/homework.png").toExternalForm());
                     
                 }
                 else if(game.getReady() == 1) {
                     game.setTextbook(true);
                     fullText = "You forgot your textbook! Phew, good that you checked your bag.";
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/textbook.png");
+                    image = new Image(getClass().getResource("/com/example/images/textbook.png").toExternalForm());
                 }
                 else {
                     fullText = "You checked your bag and everything is ready to go!";
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
+                    image = new Image(getClass().getResource("/com/example/images/bag.png").toExternalForm());
                 }
                 System.out.println(game.getReady());
                 break;
             case "scene3f3a":
                 fullText = "You feel confident about yourself.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
+                image = new Image(getClass().getResource("/com/example/images/bag.png").toExternalForm());
                 break;
             case "scene3f3b":
                 fullText = "You checked your bag" + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/bag.png");
+                image = new Image(getClass().getResource("/com/example/images/bag.png").toExternalForm());
                 break;
             case "scene3g":
                 fullText = "You played with your phone." + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/phone.png");
+                image = new Image(getClass().getResource("/com/example/images/phone.png").toExternalForm());
                 break;
             case "sceneForce":
                 fullText = "Your mom is calling you to leave home.\n" + "You are late for school!\n" + "You have to leave home now!";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/mom.png");
+                image = new Image(getClass().getResource("/com/example/images/mom.png").toExternalForm());
                 break;
             case "scene4":
                 fullText = "You left home." + "\n" + "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leavehome.png");
+                image = new Image(getClass().getResource("/com/example/images/leavehome.png").toExternalForm());
                 break;
             case "scene5":
                 fullText = game.weatherEvent();
@@ -383,35 +383,35 @@ public class Main extends Application { // Main class for the JavaFX application
                 (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ) {
                     if(game.isUmbrellaPack()) {
                         fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/rainUmbrella.png");
+                        image = new Image(getClass().getResource("/com/example/images/rainUmbrella.png").toExternalForm());
                     }
                     else {
                         fullText = "You regret not bringing an umbrella." + "\n" + fullText;
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/rain.png");
+                        image = new Image(getClass().getResource("/com/example/images/rain.png").toExternalForm());
                     }
                 }
                 else if((Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77)) {
                     if(game.isUmbrellaPack()) {
                         fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/snowUmbrella.png");
+                        image = new Image(getClass().getResource("/com/example/images/snowUmbrella.png").toExternalForm());
                     }
                     else {
                         fullText = "You regret not bringing an umbrella." + "\n" + fullText;
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/snow.png");
+                        image = new Image(getClass().getResource("/com/example/images/snow.png").toExternalForm());
                     }
                 }
                 else if(Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99) {
                     if(game.isUmbrellaPack()) {
                         fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/stormUmbrella.png");
+                        image = new Image(getClass().getResource("/com/example/images/stormUmbrella.png").toExternalForm());
                     }
                     else {
                         fullText = "You regret not bringing an umbrella." + "\n" + fullText;
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/storm.png");
+                        image = new Image(getClass().getResource("/com/example/images/storm.png").toExternalForm());
                     }
                 }
                 else {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sunny.png");
+                    image = new Image(getClass().getResource("/com/example/images/sunny.png").toExternalForm());
                 }
                 fullText = "The weather now is " + Weather.defineWeather(Weather.getWeather(game.getHour())) + "\n" + fullText;
                 break;
@@ -420,16 +420,16 @@ public class Main extends Application { // Main class for the JavaFX application
                 game.updateTime(0);
                 fullText = "You arrived at school at " + game.getTime() + "\n" + game.checkLateSchool();
                 if(game.checkLateSchool().equals("You are late for school!")) {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/late.png");
+                    image = new Image(getClass().getResource("/com/example/images/late.png").toExternalForm());
                 }
                 else {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/school.png");
+                    image = new Image(getClass().getResource("/com/example/images/school.png").toExternalForm());
                 }
                 break;
             case "scene7":
                 if(game.getHour() < game.getSchoolHour() || (game.getHour() == game.getSchoolHour() && game.getMinute() < game.getSchoolMinute())) {
                     fullText = "You arrived at school early, you can relax for a while, so you decided to play on your phone.";
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/phoneSchool.png");
+                    image = new Image(getClass().getResource("/com/example/images/phoneSchool.png").toExternalForm());
                     int timePassed = game.getSchoolHour() * 60 + game.getSchoolMinute() - (game.getHour() * 60 + game.getMinute());
                     game.setHappiness((int)(game.getHappiness() + 0.5 * timePassed));
                     game.addTime(timePassed);
@@ -437,7 +437,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 }
                 else {
                     fullText = "You arrived at school on time.";
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/schoolTable.png");
+                    image = new Image(getClass().getResource("/com/example/images/schoolTable.png").toExternalForm());
                 }
                 break;
             case "scene8":
@@ -445,11 +445,11 @@ public class Main extends Application { // Main class for the JavaFX application
                 int timePassed = 12 * 60 - (game.getHour() * 60 + game.getMinute());
                 game.addTime(timePassed);
                 game.updateTime(0);
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/class.png");
+                image = new Image(getClass().getResource("/com/example/images/class.png").toExternalForm());
                 break;
             case "scene8a":
                 fullText = "";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/schoolFrustrated.png");
+                image = new Image(getClass().getResource("/com/example/images/schoolFrustrated.png").toExternalForm());
                 if(!game.getMorningStatus()[0]) {
                     fullText += "You did not brush your teeth, your breath stinks.\n";
                     game.setHappiness(game.getHappiness() - 10);
@@ -467,7 +467,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 }
                 break;
             case "scene8b":
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/schoolFrustratedBag.png");
+                image = new Image(getClass().getResource("/com/example/images/schoolFrustratedBag.png").toExternalForm());
                 if(!game.isHomework()) {
                     fullText = "You did not bring your homework, so you got a zero for the day.";
                     game.setHappiness(game.getHappiness() - 10);
@@ -485,18 +485,18 @@ public class Main extends Application { // Main class for the JavaFX application
                 if(game.isLunch()) {
                     fullText = "It is now lunch time at " + game.getTime() + "\nYou brought your own lunch, you feel full and happy.";
                     game.setHappiness(game.getHappiness() + 10);
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/lunch.png");
+                    image = new Image(getClass().getResource("/com/example/images/lunch.png").toExternalForm());
                 }
                 else {
                     if(goodLunch == 0) {
                         fullText = "It is now lunch time at " + game.getTime() + "\nYou bought a lunch from the cafeteria, it is not very good, but you are full.";
                         game.setHappiness(game.getHappiness() - 5);
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/lunchBad.png");
+                        image = new Image(getClass().getResource("/com/example/images/lunchBad.png").toExternalForm());
                     }
                     else {
                         fullText = "It is now lunch time at " + game.getTime() + "\nYou bought a lunch from the cafeteria, it is delicious, you feel happy.";
                         game.setHappiness(game.getHappiness() + 10);
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/lunchGood.png");
+                        image = new Image(getClass().getResource("/com/example/images/lunchGood.png").toExternalForm());
                     }
                 }
                 game.addTime(60);
@@ -504,7 +504,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
             case "scene10": 
                 fullText = "It's now " + game.getTime() + "\nIt's afternoon class time, you are ready to learn!";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/class.png");
+                image = new Image(getClass().getResource("/com/example/images/class.png").toExternalForm());
             break;
 
             case "scene11":
@@ -513,17 +513,17 @@ public class Main extends Application { // Main class for the JavaFX application
                 (game.getHappiness() <= 50 && game.getHappiness() > 20 && sleepy <= 5) || sleepy == 0) {
                     fullText = "You fell asleep in class, you feel tired and frustrated.";
                     game.setHappiness(game.getHappiness() - 10);
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sleepy.png");
+                    image = new Image(getClass().getResource("/com/example/images/sleepy.png").toExternalForm());
                 }
                 else if((game.getHappiness() <= 20 && game.getHappiness() > 0 && sleepy <= 7) || sleepy == 1) {
                     fullText = "You are a bit sleepy in class, you feel tired.";
                     game.setHappiness(game.getHappiness() - 5);
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/tired.png");
+                    image = new Image(getClass().getResource("/com/example/images/tired.png").toExternalForm());
                 }
                 else {
                     fullText += "You are focused in class, you feel happy.";
                     game.setHappiness(game.getHappiness() + 10);
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/focused.png");
+                    image = new Image(getClass().getResource("/com/example/images/focused.png").toExternalForm());
                 }
                 game.addTime(3 * 60);
                 game.updateTime(0); 
@@ -532,16 +532,16 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "It is now " + game.getTime() + "\nSchool is over!";
                 if((Weather.getWeather(game.getHour()) >= 51 && Weather.getWeather(game.getHour()) <= 67) || 
                 (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ) {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchoolRain.png");
+                    image = new Image(getClass().getResource("/com/example/images/leaveSchoolRain.png").toExternalForm());
                 }
                 else if((Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77)) {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchoolSnow.png");
+                    image = new Image(getClass().getResource("/com/example/images/leaveSchoolSnow.png").toExternalForm());
                 }
                 else if(Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99) {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchoolStorm.png");
+                    image = new Image(getClass().getResource("/com/example/images/leaveSchoolStorm.png").toExternalForm());
                 }
                 else {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/leaveSchool.png");
+                    image = new Image(getClass().getResource("/com/example/images/leaveSchool.png").toExternalForm());
                 }
                 break;
             case "scene14":
@@ -551,11 +551,11 @@ public class Main extends Application { // Main class for the JavaFX application
                     (Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77) ||
                     (Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99)) {
                         fullText = "The weather is not suitable for going to the park, you decided to go home instead.";
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/parkBadWeather.png");
+                        image = new Image(getClass().getResource("/com/example/images/parkBadWeather.png").toExternalForm());
                     }
                     else {
                         fullText = "You are on your way to the park, you feel excited!";
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sunny.png");
+                        image = new Image(getClass().getResource("/com/example/images/sunny.png").toExternalForm());
                     }
                 }
                 else {
@@ -564,35 +564,35 @@ public class Main extends Application { // Main class for the JavaFX application
                     (Weather.getWeather(game.getHour()) >= 80 && Weather.getWeather(game.getHour()) <= 82) ) {
                         if(game.isUmbrellaPack()) {
                             fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
-                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/rainUmbrella.png");
+                            image = new Image(getClass().getResource("/com/example/images/rainUmbrella.png").toExternalForm());
                         }
                         else {
                             fullText = "You regret not bringing an umbrella." + "\n" + fullText;
-                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/rain.png");
+                            image = new Image(getClass().getResource("/com/example/images/rain.png").toExternalForm());
                         }
                     }
                     else if((Weather.getWeather(game.getHour()) >= 71 && Weather.getWeather(game.getHour()) <= 77)) {
                         if(game.isUmbrellaPack()) {
                             fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
-                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/snowUmbrella.png");
+                            image = new Image(getClass().getResource("/com/example/images/snowUmbrella.png").toExternalForm());
                         }
                         else {
                             fullText = "You regret not bringing an umbrella." + "\n" + fullText;
-                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/snow.png");
+                            image = new Image(getClass().getResource("/com/example/images/snow.png").toExternalForm());
                         }
                     }
                     else if(Weather.getWeather(game.getHour()) >= 95 && Weather.getWeather(game.getHour()) <= 99) {
                         if(game.isUmbrellaPack()) {
                             fullText = "You are glad that you brought an umbrella." + "\n" + fullText;
-                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/stormUmbrella.png");
+                            image = new Image(getClass().getResource("/com/example/images/stormUmbrella.png").toExternalForm());
                         }
                         else {
                             fullText = "You regret not bringing an umbrella." + "\n" + fullText;
-                            image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/storm.png");
+                            image = new Image(getClass().getResource("/com/example/images/storm.png").toExternalForm());
                         }
                     }
                     else {
-                        image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sunny.png");
+                        image = new Image(getClass().getResource("/com/example/images/sunny.png").toExternalForm());
                     }
                     fullText = "You are now heading home.\nThe weather now is " + Weather.defineWeather(Weather.getWeather(game.getHour())) + "\n" + fullText;
                 }
@@ -601,35 +601,35 @@ public class Main extends Application { // Main class for the JavaFX application
                 game.addTime(game.getSchoolParkTravelTime());
                 game.updateTime(0);
                 fullText = "You arrived at " + Map.getParkName();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/park.png");
+                image = new Image(getClass().getResource("/com/example/images/park.png").toExternalForm());
                 break;
             case "scene16a":
                 fullText = "You played with your friends in the park";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/friends.png");
+                image = new Image(getClass().getResource("/com/example/images/friends.png").toExternalForm());
                 break;
             case "scene16b":
                 fullText = "You played basketball in the park";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/basketball.png");
+                image = new Image(getClass().getResource("/com/example/images/basketball.png").toExternalForm());
                 break;
             case "scene16c": 
                 fullText = "You ran track in the park";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/track.png");
+                image = new Image(getClass().getResource("/com/example/images/track.png").toExternalForm());
                 break;
             case "scene16d":
                 fullText = "You played volleyball in the park";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/volleyball.png");
+                image = new Image(getClass().getResource("/com/example/images/volleyball.png").toExternalForm());
                 break;
             case "scene16e":
                 fullText = "You played soccer in the park";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/soccer.png");
+                image = new Image(getClass().getResource("/com/example/images/soccer.png").toExternalForm());
                 break;
             case "scene16f":
                 fullText = "You played badminton in the park";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/badminton.png");
+                image = new Image(getClass().getResource("/com/example/images/badminton.png").toExternalForm());
                 break;
             case "sceneForce2":
                 fullText = "Your mom called you to come home for dinner";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/momCall.png");
+                image = new Image(getClass().getResource("/com/example/images/momCall.png").toExternalForm());
                 break;
             case "scene17":
                 if(game.getPreviousDestination().equals("Park")) {
@@ -642,7 +642,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 game.updateTime(0);
                 game.setHomeworkTime((int)(Math.random() * 13 + 12) * 5);
                 fullText = "You arrived home, it is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/home.png");
+                image = new Image(getClass().getResource("/com/example/images/home.png").toExternalForm());
                 break;
             case "scene18a":
                 int timeHomework = (int) (Math.random() * 6 + 1) * 5;
@@ -659,7 +659,7 @@ public class Main extends Application { // Main class for the JavaFX application
                     fullText += "\nYou have finished doing homework";
                 }
                 fullText += "\nIt is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/doHomework.png");
+                image = new Image(getClass().getResource("/com/example/images/doHomework.png").toExternalForm());
                 break;
             case "scene18b":
                 int timePhone = (int) (Math.random() * 6 + 1) * 5;
@@ -667,7 +667,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 game.updateTime(0);
                 fullText = "You decided to play on your phone \n" + 
                 "It is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/phone.png");
+                image = new Image(getClass().getResource("/com/example/images/phone.png").toExternalForm());
                 break;
             case "scene18c":
                 int napTime = (int) (Math.random() * 6 + 1) * 5;
@@ -681,41 +681,41 @@ public class Main extends Application { // Main class for the JavaFX application
                 }
                 fullText = "You decided to take a nap \n" +
                 "it is now " + game.getTime() + "\n You feel more productive.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/nap.png");
+                image = new Image(getClass().getResource("/com/example/images/nap.png").toExternalForm());
             case "sceneForce3":
                 fullText = "It is now " + game.getTime() + "\nYour mom came in to call you for dinner";
                 if(game.getHomeworkDone() > (double)(game.getHomeworkTime()) / 8.0) {
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dinner.png");
+                    image = new Image(getClass().getResource("/com/example/images/dinner.png").toExternalForm());
                 }
                 else {
                     fullText += "\nYou have not done much of your homework";
-                    image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dinnerAngry.png");
+                    image = new Image(getClass().getResource("/com/example/images/dinnerAngry.png").toExternalForm());
                 }
                 game.addTime(60);
                 game.updateTime(0);
                 break;
             case "scene19":
                 fullText = "You finished your dinner, it is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/dinnerFinish.png");
+                image = new Image(getClass().getResource("/com/example/images/dinnerFinish.png").toExternalForm());
                 break;
             case "sceneForce4":
                 fullText = "It is " + game.getTime() + "\nYou have to take a shower now.";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/shower.png"); 
+                image = new Image(getClass().getResource("/com/example/images/shower.png").toExternalForm()); 
                 break;
             case "scene20":
                 fullText = "You came back from the shower, " + "\nIt is now " + game.getTime();
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/showerFinish.png");
+                image = new Image(getClass().getResource("/com/example/images/showerFinish.png").toExternalForm());
                 break;
             case "scene21":
                 fullText = "It is now " + game.getTime() + "\nYou are going to brush your teeth";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/brush.png");
+                image = new Image(getClass().getResource("/com/example/images/brush.png").toExternalForm());
                 game.addTime(10);
                 game.updateTime(0);
                 break;
             case "scene22":
                 fullText = "It is now " + game.getTime() + "\nYou are ready to sleep" + 
                 "\nGood night!";
-                image = new Image("file:/workspaces/final-project-chenzhil1/JavaAPIProject/src/main/java/com/example/images/sleep.png");
+                image = new Image(getClass().getResource("/com/example/images/sleep.png").toExternalForm());
                 break;
 
             default:
