@@ -437,7 +437,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
             case "scene7":
                 if(game.getHour() < game.getSchoolHour() || (game.getHour() == game.getSchoolHour() && game.getMinute() < game.getSchoolMinute())) {
-                    fullText = "You arrived at school early, you can relax for a while, so you decided to play on your phone.";
+                    fullText = "You arrived at school early, you can relax for a while, \nso you decided to play on your phone.";
                     image = new Image(getClass().getResource("/com/example/images/phoneSchool.png").toExternalForm());
                     int timePassed = game.getSchoolHour() * 60 + game.getSchoolMinute() - (game.getHour() * 60 + game.getMinute());
                     game.setHappiness((int)(game.getHappiness() + 0.5 * timePassed));
