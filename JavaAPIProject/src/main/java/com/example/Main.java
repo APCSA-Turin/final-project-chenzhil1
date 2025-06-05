@@ -155,9 +155,11 @@ public class Main extends Application { // Main class for the JavaFX application
         System.out.println();
         System.out.println("Welcome to A Day in A City!");
         System.out.println("Game by Chen Zhi Lin");
-        System.out.println("GUI is open on the next browser tab");
+        System.out.println("GUI is open on the next browser tab or as a pop up window");
         System.out.println("If you want to play the console version with more features, please run the program with debug mode enabled");
         System.out.println("Currently working fixing bugs"); 
+        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(695);
 
         // Ask for user's name using a popup dialog
         TextInputDialog dialog = new TextInputDialog("");
@@ -730,10 +732,28 @@ public class Main extends Application { // Main class for the JavaFX application
 
         VBox vbox = new VBox(10, imageView, label, hintLabel); 
         vbox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(vbox, 1200,695);
+        Scene scene = new Scene(vbox);
+        // Save current window size and position
+        double x = stage.getX();
+        double y = stage.getY();
+        double width = stage.getWidth();
+        double height = stage.getHeight();
+        boolean wasMaximized = stage.isMaximized();
+
+        // Set the new scene
         stage.setScene(scene);
         stage.setTitle("A Day in A City");
         stage.show();
+
+        // Restore window size and position if not maximized
+        if (wasMaximized) {
+            stage.setMaximized(true);
+        } else {
+            stage.setX(x);
+            stage.setY(y);
+            stage.setWidth(width);
+            stage.setHeight(height);
+        }
         typeText(label, fullText, Duration.millis(50), () -> {
             // This code will run after the text is fully displayed
                 scene.setOnKeyPressed(event -> {
@@ -989,7 +1009,7 @@ public class Main extends Application { // Main class for the JavaFX application
 
         VBox vbox = new VBox(10,label, buttonBox);
         vbox.setAlignment(Pos.CENTER);
-        Scene scene3 = new Scene(vbox, 1200,695);
+        Scene scene3 = new Scene(vbox);
         stage.setScene(scene3);
         stage.setTitle("A Day in A City");
         stage.show();
