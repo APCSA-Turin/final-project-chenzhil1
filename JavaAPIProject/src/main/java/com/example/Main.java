@@ -160,6 +160,8 @@ public class Main extends Application { // Main class for the JavaFX application
         System.out.println("Currently working fixing bugs"); 
         primaryStage.setMinWidth(1200);
         primaryStage.setMinHeight(695);
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(695);
 
         // Ask for user's name using a popup dialog
         TextInputDialog dialog = new TextInputDialog("");
@@ -182,7 +184,7 @@ public class Main extends Application { // Main class for the JavaFX application
     }
 
 
-    public void typeText(Label label, String fullText, Duration delay, Runnable onFinished) {
+    public void typeText(Label label, VBox vbox, String fullText, Duration delay, Runnable onFinished) {
         //This method is used to display the text in a typewriter effect
         final StringBuilder displayedText = new StringBuilder();
         Timeline timeline = new Timeline();
@@ -190,7 +192,11 @@ public class Main extends Application { // Main class for the JavaFX application
             final int index = i;
             KeyFrame keyFrame = new KeyFrame(delay.multiply(i), event -> {
                 displayedText.append(fullText.charAt(index));
+                label.setAlignment(Pos.CENTER);
                 label.setText(displayedText.toString());
+                label.setWrapText(true);
+                label.setMaxWidth(Double.MAX_VALUE);
+                label.maxWidthProperty().bind(vbox.widthProperty().multiply(0.8));
             });
             timeline.getKeyFrames().add(keyFrame);
         }
@@ -273,7 +279,7 @@ public class Main extends Application { // Main class for the JavaFX application
         stage.show();
         String fullText = "This feature is not ready yet.";
         
-        typeText(label, fullText, Duration.millis(50), () -> {
+        typeText(label, vbox, fullText, Duration.millis(50), () -> {
             // This code will run after the text is fully displayed
                 scene1.setOnKeyPressed(event -> {
                 if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
@@ -284,6 +290,7 @@ public class Main extends Application { // Main class for the JavaFX application
     }
 
     public void showScene(Stage stage, String name, GameLogic game, String sceneID) {
+        VBox vbox;
         //This method is used to display the scene based on the sceneID
         Label label = new Label();
         label.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
@@ -724,13 +731,13 @@ public class Main extends Application { // Main class for the JavaFX application
                 break;
         }
             ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(600);
-            imageView.setFitHeight(400);
             imageView.setPreserveRatio(true);
             Label hintLabel = new Label("Press ENTER to continue...");
             hintLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #777777;");
 
-        VBox vbox = new VBox(10, imageView, label, hintLabel); 
+        vbox = new VBox(10, imageView, label, hintLabel); 
+        imageView.fitWidthProperty().bind(vbox.widthProperty().multiply(0.7));  // 70% of VBox width
+        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.5)); // 50% of VBox height
         vbox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vbox);
         // Save current window size and position
@@ -754,7 +761,7 @@ public class Main extends Application { // Main class for the JavaFX application
             stage.setWidth(width);
             stage.setHeight(height);
         }
-        typeText(label, fullText, Duration.millis(50), () -> {
+        typeText(label, vbox, fullText, Duration.millis(50), () -> {
             // This code will run after the text is fully displayed
                 scene.setOnKeyPressed(event -> {
                 if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
