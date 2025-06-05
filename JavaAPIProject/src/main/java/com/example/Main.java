@@ -658,10 +658,10 @@ public class Main extends Application { // Main class for the JavaFX application
                 if(timeHomework > game.getHomeworkTime() - game.getHomeworkDone()) {
                     timeHomework = game.getHomeworkTime() - game.getHomeworkDone();
                 }
-                game.setHomeworkDone(timeHomework);
+                game.setHomeworkDone(game.getHomeworkDone() + timeHomework);
                 game.addTime(timeHomework);
                 game.updateTime(0);
-                fullText = "Ypu have a total of " + game.getHomeworkTime() + " minutes of homework" + "\n"
+                fullText = "You have a total of " + game.getHomeworkTime() + " minutes of homework" + "\n"
                 + "You have done " + game.getHomeworkDone() + " minutes of work";
                 if(game.getHomeworkDone() == game.getHomeworkTime()) {
                     game.finishHomework();
@@ -691,6 +691,7 @@ public class Main extends Application { // Main class for the JavaFX application
                 fullText = "You decided to take a nap \n" +
                 "it is now " + game.getTime() + "\n You feel more productive.";
                 image = new Image(getClass().getResource("/com/example/images/nap.png").toExternalForm());
+                break;
             case "sceneForce3":
                 fullText = "It is now " + game.getTime() + "\nYour mom came in to call you for dinner";
                 if(game.getHomeworkDone() > (double)(game.getHomeworkTime()) / 8.0) {
@@ -724,6 +725,13 @@ public class Main extends Application { // Main class for the JavaFX application
             case "scene22":
                 fullText = "It is now " + game.getTime() + "\nYou are ready to sleep" + 
                 "\nGood night!";
+                if(game.getHappiness() >= 100) {
+                    fullText += "\nIt was a good day";
+
+                }
+                else {
+                    fullText += "\nIt was a normal day";
+                }
                 image = new Image(getClass().getResource("/com/example/images/sleep.png").toExternalForm());
                 break;
 
