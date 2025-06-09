@@ -106,7 +106,7 @@ This class deals with any location related API calls and storing data used for G
 \-Get country name by using Geoapify API call
 
     public static void findSchool()
-\-Check school type
+\-Check school type \
 \-Find matching school in near location
 
 

@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-
 import javafx.scene.control.TextInputDialog;
 
 public class Main extends Application { // Main class for the JavaFX application, game starts here
