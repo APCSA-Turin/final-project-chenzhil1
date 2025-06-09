@@ -24,37 +24,56 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \- Output for the check weather action in main \
 
     public void packBag()
-\-This method is used to 
+\-This method is used to return check bag options to main \
+\-It also generate the random event of user forgot to bring something \
+\-It sets all items brought to true when the user decides to check the bag
 
-    public void checkLateSchool()
-\-
-
-    public void WeatherEvent()
-\-
-
-    public void checkBagContents()
-\-
-
+// Get methods
     public int getAge()
     public String getDate()
     public String getTime()
     public int getSchoolHour()
     public int getSchoolMinute()
     public ArrayList<String> getMorningThings()
-    public String getWeather()
     public int getReady()
     public int getHour()
     public int getMinute()
-    public int getLuck()
     public int getHappiness()
+    public boolean isUmbrellaPack()
+    public boolean isLunch()
+    public boolean isTextbook()
+    public boolean isHomework()
+    public boolean[] getMorningStatus()
+    public ArrayList<String> getAfternoonThings()
+    public ArrayList<String> getParkThings() 
+    public String getDestination()
+    public int getHomeSchoolTravelTime()
+    public int getSchoolParkTravelTime()
+    public int getParkHomeTravelTime()
+    public String getPreviousDestination()
+    public ArrayList<String> getEveningThings()
+    public int getHomeworkTime()
+    public int getHomeworkDone()
+    public boolean getDinner() 
+    public boolean getShower()
 
 \-List of getter methods \
 \-Return needed information for main
 
-    public void setTime(int hour, int minute)
-    public void setSchoolHour(int hour, int minute)
-    public void setLuck(int luck)
-    public void setHappiness(int happiness)
+public void setTime(int hour, int minute)
+public void setSchoolHour(int hour, int minute)
+public void setHappiness(int happiness)
+public void setUmbrellaPack(boolean umbrellaPack)
+public void setLunch(boolean lunch)
+public void setTextbook(boolean textbook)
+public void setHomework(boolean homework)
+public void setMorningStatus(int index, boolean status)
+public void setDestination(String destination)
+public void setPreviousDestination(String previousDestination)
+public void setHomeworkTime(int homeworkTime)
+public void setHomeworkDone(int homeworkDone)
+public void setDinner(boolean din)
+public void setShower(boolean shower)
 \-List of setter methods \
 \-Used to set specific data
 
