@@ -60,20 +60,20 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \-List of getter methods \
 \-Return needed information for main
 
-public void setTime(int hour, int minute)
-public void setSchoolHour(int hour, int minute)
-public void setHappiness(int happiness)
-public void setUmbrellaPack(boolean umbrellaPack)
-public void setLunch(boolean lunch)
-public void setTextbook(boolean textbook)
-public void setHomework(boolean homework)
-public void setMorningStatus(int index, boolean status)
-public void setDestination(String destination)
-public void setPreviousDestination(String previousDestination)
-public void setHomeworkTime(int homeworkTime)
-public void setHomeworkDone(int homeworkDone)
-public void setDinner(boolean din)
-public void setShower(boolean shower)
+    public void setTime(int hour, int minute)
+    public void setSchoolHour(int hour, int minute)
+    public void setHappiness(int happiness)
+    public void setUmbrellaPack(boolean umbrellaPack)
+    public void setLunch(boolean lunch)
+    public void setTextbook(boolean textbook)
+    public void setHomework(boolean homework)
+    public void setMorningStatus(int index, boolean status)
+    public void setDestination(String destination)
+    public void setPreviousDestination(String previousDestination)
+    public void setHomeworkTime(int homeworkTime)
+    public void setHomeworkDone(int homeworkDone)
+    public void setDinner(boolean din)
+    public void setShower(boolean shower)
 \-List of setter methods \
 \-Used to set specific data
 
