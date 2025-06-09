@@ -98,27 +98,31 @@ This class initializes the JavaFX application, sets up the intro and game scenes
 \-Textbox that ask for user's name
 \-Get transit time between home and school
 
-    public void typeText(Label label, String fullText, Duration delay, Runnable onFinished)
+    public void typeText(Label label, VBox vbox, String fullText, Duration delay, Runnable onFinished)
 \-Display text in typewriter form \
 \-Used for visual appealing
 
-    public void handleMorningChoice(String action, String name, GameLogic game, int transitTime, Stage stage)
+    public void handleMorningChoice(String action, String name, GameLogic game, Stage stage)
 \-Used to direct scene for morning actions \
 \-Used switch to differetiate between choices
 
     public void notReady(Stage stage, String name, GameLogic game, int transitTime)
 \-Display message for not-ready features
 
-    public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID)
+    public void showScene(Stage stage, String name, GameLogic game, String sceneID)
 \-Display scene based on sceneID \
 \-Gather information from gameLogic object \
 \-Used images pregenerated that are stored in images folder \
 \-Display text in typewriter format
 
-    public void showScene(Stage stage, String name, GameLogic game, int transitTime, String sceneID, ArrayList<String> buttonsList)
+    public void showScene(Stage stage, String name, GameLogic game, String sceneID, ArrayList<String> buttonsList)
 \-Display choices \
 \-Display buttons \
 \-Show buttons with delay after one another
+
+    public void yesNoOptions(Stage stage, String name, GameLogic game, String sceneID, String action)
+\-This method handles user selection of two choices \
+\-It takes in the sceneID and selection
 
 ### Map.java
 This class deals with any location related API calls and storing data used for GameLogic class
