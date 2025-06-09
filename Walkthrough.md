@@ -28,6 +28,14 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \-It also generate the random event of user forgot to bring something \
 \-It sets all items brought to true when the user decides to check the bag
 
+    public String checkLateSchool()
+\-This method is used to compare user's arrival time with school start time \
+\-It returns a String telling the users if they are late or not
+
+    public String weatherEvent()
+\-This method will check current weather based on data from the Weather class \
+\-Then the program will return the result of the weather with what the user has 
+
     public int getAge()
     public String getDate()
     public String getTime()
