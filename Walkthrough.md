@@ -28,7 +28,6 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \-It also generate the random event of user forgot to bring something \
 \-It sets all items brought to true when the user decides to check the bag
 
-// Get methods
     public int getAge()
     public String getDate()
     public String getTime()
