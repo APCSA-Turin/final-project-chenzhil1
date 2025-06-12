@@ -65,7 +65,7 @@ Main game logic, accessible to the Main class, used to execute game related acti
     public boolean getShower()
 
 \-List of getter methods \
-\-Return needed information for main
+\-Return needed information for Main
 
     public void setTime(int hour, int minute)
     public void setSchoolHour(int hour, int minute)
@@ -104,7 +104,8 @@ This class initializes the JavaFX application, sets up the intro and game scenes
 
     public void handleMorningChoice(String action, String name, GameLogic game, Stage stage)
 \-Used to direct scene for morning actions \
-\-Used switch to differetiate between choices
+\-Used switch to differetiate between choices \
+\-Also force a scene to prompt the user to exit home based on time
 
     public void notReady(Stage stage, String name, GameLogic game, int transitTime)
 \-Display message for not-ready features
@@ -124,6 +125,16 @@ This class initializes the JavaFX application, sets up the intro and game scenes
 \-This method handles user selection of two choices \
 \-It takes in the sceneID and selection
 
+    public void handleAfternoonChoice(String action, String name, GameLogic game, Stage stage)
+\-Used to direct scene for afternoon actions \
+\-Used switch to differetiate between choices \
+\-Also force a scene to prompt the user to return home based on time
+
+    public void handleEveningChoice(String action, String name, GameLogic game, Stage stage)
+\-Used to direct scene for evening actions \
+\-Used switch to differetiate between choices \
+\-Also force a scene to prompt the user to eat dinner and shower based on time
+
 ### Map.java
 This class deals with any location related API calls and storing data used for GameLogic class
 
@@ -133,12 +144,67 @@ This class deals with any location related API calls and storing data used for G
 \-Store country info
 
     public static String findPlace(double latitude, double longitude)
-\-Get country name by using Geoapify API call
+\-Get country name by using BigDataCLoud API call 
 
     public static void findSchool()
 \-Check school type \
-\-Find matching school in near location
+\-Find matching school in near location \
+\-Call schoolHelper to store data
 
+    public static void schoolHelper(JSONArray features)
+\-Find school that contains the type in the name and store its information \
+\-If unable to find a school that contains the type in the name then default to first school. 
+
+    public static int getTransitTime(double lat1, double long1, double lat2, double long2, String mode)
+\-This method finds the transit time between two locations using two latitudes and longitudes with Geoapify API \
+\-The default transit method is drive because public transits can't cover many places and causes long travel time \
+\-Returns the time as int for minutes
+
+    public static JSONObject getRequest(String urlString)
+\-This method is a helper method used to get JSON info via https \
+\-The JSONObject will be used for parsing info and insert to replace information for location
+
+    public static void findPark()
+\-This method finds a park near the random generated latitude and longitude from earlier \
+\-This location data will be used to calculate travel time between places \
+\-If no park can be found around the area, park will be initialized to "Leif Ericson Park"
+
+    public static double getLatitude()
+    public static double getLongitude()
+    public static String getCountry()
+    public static String getCity()
+    public static String getState()
+    public static String getSchoolName()
+    public static String getSchoolAddress()
+    public static String getSchoolType()
+    public static double getSchoolLatitude()
+    public static double getSchoolLongitude()
+    public static double getParkLatitude()
+    public static double getParkLongitude()
+    public static String getParkName()
+
+\-List of getter methods \
+\-Return needed information for Main and GameLogic
+
+    public static void setSchoolType(String type)
+\-List of setter methods \
+\-This one is used to set the school type to find using findSchool method
+
+### Weather.java
+This class deals with any weather related events by calling Open Meteo API to get the weather for the future 24 hours
+
+    public static void findWeather()
+\-This method finds the weather in the future 24 hours using Open Meteo API and store datas in arrays \
+\-The data stored would be in int or double form representing the weather and temperature
+
+    public static String defineWeather(int wCode)
+\-This method takes in an int specifically from data gathered from findWeather method \
+\-Then this method will return a String that represent the weather
+
+    public static double getTemperature(int hour)
+    public static int getWeather(int hour)
+\-List of getter methods \
+\-Specifically used for debug purposes
 
 
 
