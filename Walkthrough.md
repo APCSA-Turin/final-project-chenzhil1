@@ -224,8 +224,18 @@ This class deals with any weather related events by calling Open Meteo API to ge
 \- This document fulfills the walkthrough requirement
 
 ## 4. Output Example 
-![Alt text](https://drive.google.com/drive-viewer/AKGpihYzHRCvqYBnNLjRCwaLocwUYqPK4sfRvUiRPaOxHpT4Y1eKXq50SrB3qOEG6AXxpjkQjN-6MXPf5rc8cBfx3HVu_G4lN2TOeA=w1672-h924-rw-v1) 
+![a](https://drive.google.com/drive-viewer/AKGpihYzHRCvqYBnNLjRCwaLocwUYqPK4sfRvUiRPaOxHpT4Y1eKXq50SrB3qOEG6AXxpjkQjN-6MXPf5rc8cBfx3HVu_G4lN2TOeA=w1672-h924-rw-v1) 
 
+
+## 5. What I Learned
+\- How to connect and retrieve data from external source \
+\- How to parse a JSON file \
+\- How to traverse through JSONArrays and JSONObject to get needed information \
+\- How to utilize JavaFX
+\- How to utilize GitHub codespace virtual display and remote desktop \
+\- How to write scenes and make buttons for user interaction \
+\- How to validate random coordinate for location within the country \
+\- How to deal with case when data is not avaliable
 
 
 
