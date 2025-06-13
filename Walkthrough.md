@@ -21,7 +21,7 @@ Main game logic, accessible to the Main class, used to execute game related acti
 \- Get stored weather based on current hour \
 \- Get stored temperature based on current hour \
 \- Check if the weather and temperatue in the future 24 hours for rain and snow \
-\- Output for the check weather action in main \
+\- Output for the check weather action in main 
 
     public void packBag()
 \- This method is used to return check bag options to main \
