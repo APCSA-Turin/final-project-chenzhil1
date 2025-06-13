@@ -215,14 +215,15 @@ This class deals with any weather related events by calling Open Meteo API to ge
 \
 ✔ GUI (JavaFX) (+2%) \
 \- Used scenes and stages to show the image and text for an event \
-\- Used Buttons and ArrayList to construct user event selections
+\- Used Buttons and ArrayList to construct user event selections \
 \
 ✔ Filter/Sort Data (+2%) \
 \- Time is filtered when executing the user selection scenes \
-\- The user will be interrupted if a certain time was reached and prompted to do another action
+\- The user will be interrupted if a certain time was reached and prompted to do another action \
 \
 ✔ Written Walkthrough (+5%)
 \- This document fulfills the walkthrough requirement
+\
 
 ## 4. Output Example 
 ![a](JavaAPIProject/src/main/java/com/example/images/example.gif) 
