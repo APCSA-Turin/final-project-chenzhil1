@@ -217,6 +217,10 @@ This class deals with any weather related events by calling Open Meteo API to ge
 \- Used scenes and stages to show the image and text for an event \
 \- Used Buttons and ArrayList to construct user event selections \
 \
+✔ Machine Learning (+6%) \
+\- The images in images folder were generated with Dall E3 model \
+\- Pre-generated to avoid long waiting time before program execution \
+\
 ✔ Filter/Sort Data (+2%) \
 \- Time is filtered when executing the user selection scenes \
 \- The user will be interrupted if a certain time was reached and prompted to do another action \
