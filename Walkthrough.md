@@ -221,7 +221,7 @@ This class deals with any weather related events by calling Open Meteo API to ge
 \- Time is filtered when executing the user selection scenes \
 \- The user will be interrupted if a certain time was reached and prompted to do another action \
 \
-✔ Written Walkthrough (+5%)
+✔ Written Walkthrough (+5%) \
 \- This document fulfills the walkthrough requirement
 \
 
