@@ -223,7 +223,7 @@ This class deals with any weather related events by calling Open Meteo API to ge
 \
 ✔ Written Walkthrough (+5%) \
 \- This document fulfills the walkthrough requirement
-\
+
 
 ## 4. Output Example 
 ![a](JavaAPIProject/src/main/java/com/example/images/example.gif) 
