@@ -224,7 +224,7 @@ This class deals with any weather related events by calling Open Meteo API to ge
 \- This document fulfills the walkthrough requirement
 
 ## 4. Output Example 
-![a](https://drive.google.com/drive-viewer/AKGpihYzHRCvqYBnNLjRCwaLocwUYqPK4sfRvUiRPaOxHpT4Y1eKXq50SrB3qOEG6AXxpjkQjN-6MXPf5rc8cBfx3HVu_G4lN2TOeA=w1672-h924-rw-v1) 
+![a](JavaAPIProject/src/main/java/com/example/images/basketball.png) 
 
 
 ## 5. What I Learned
